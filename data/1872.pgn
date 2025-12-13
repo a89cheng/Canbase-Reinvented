@@ -1,0 +1,215 @@
+[Event "CAN-ch"]
+[Site "Hamilton CAN"]
+[Date "1872.09.??"]
+[Round "?"]
+[White "Henderson, John B"]
+[Black "Ryall, Isaac"]
+[Result "0-1"]
+[ECO "C51"]
+[PlyCount "71"]
+[Opening "six seven"]
+[EventDate "1872.09.24"]
+[EventCountry "CAN"]
+
+1. e4 e5 2. Nf3 Bc5 3. Bc4 Nc6 4. b4 Nxb4 5. c3 Nc6 6. O-O Nf6 7. d4 Bb6 8. Ng5
+O-O 9. Qb3 d5 10. dxe5 dxc4 11. Qxc4 Nxe5 12. Qe2 Nd3 13. Kh1 Nxc1 14. Rxc1 Ng4
+15. Nh3 Qf6 16. f4 Ne3 17. Rg1 Qc6 18. Nd2 Qd6 19. g4 Nxg4 20. Rxg4 Bxg4 21.
+Qxg4 Qxd2 22. Rd1 Qxc3 23. f5 Qf6 24. Ng5 h6 25. h4 g6 26. e5 Qc6+ 27. Kh2 hxg5
+28. Qxg5 Qe4 29. Rf1 Qe2+ 30. Qg2 Qxg2+ 31. Kxg2 Rae8 32. f6 Rxe5 33. Kg3 Rfe8
+34. Rh1 Re3+ 35. Kf4 R8e4+ 36. Kg5 0-1
+
+[Event "CAN-ch"]
+[Site "Hamilton CAN"]
+[Date "1872.09.??"]
+[Round "?"]
+[White "Jones, Frederick T"]
+[Black "White, John"]
+[Opening"six seven"]
+[Result "1-0"]
+[ECO "C15"]
+[PlyCount "67"]
+[EventDate "1872.09.24"]
+[EventCountry "CAN"]
+
+1. e4 e6 2. d4 d5 3. Nc3 Bb4 4. Bd3 Nc6 5. Be3 Nf6 6. e5 Ne4 7. Bxe4 dxe4 8.
+Nge2 Qh4 9. O-O Bxc3 10. Nxc3 a6 11. g3 Qe7 12. Nxe4 h6 13. Qg4 Qf8 14. Nc5 Ne7
+15. Qe4 c6 16. Qd3 Nd5 17. Ne4 Nxe3 18. Nd6+ Kd7 19. fxe3 f6 20. Qb3 Kc7 21. c4
+b5 22. cxb5 axb5 23. Rac1 Kb6 24. Rxc6+ Kxc6 25. Qxb5+ Kc7 26. Rc1+ Kd8 27.
+Qb6+ Ke7 28. Rc7+ Bd7 29. Rxd7+ Kxd7 30. Qb7+ Kd8 31. Qxa8+ Kc7 32. Qb7+ Kd8
+33. Qc8+ Ke7 34. Qc7# 1-0
+
+[Event "CAN-ch"]
+[Site "Hamilton CAN"]
+[Date "1872.09.??"]
+[Opening "six seven"]
+[Round "?"]
+[White "Judd, William H"]
+[Black "Jones, Frederick T"]
+[Result "0-1"]
+[ECO "C45"]
+[PlyCount "62"]
+[EventDate "1872.09.24"]
+[EventCountry "CAN"]
+
+1. e4 e5 2. Nf3 Nc6 3. d4 exd4 4. Nxd4 Bc5 5. Nxc6 bxc6 6. Bd3 Ne7 7. a3 O-O 8.
+O-O Ng6 9. c3 d5 10. b4 Bd6 11. f4 dxe4 12. Bxe4 Ba6 13. Rf2 Bc5 14. Qf3 Bxf2+
+15. Kxf2 Qh4+ 16. g3 Qxh2+ 17. Qg2 Qxg2+ 18. Kxg2 Rfe8 19. Bxc6 Re2+ 20. Kf3
+Rd8 21. b5 Bxb5 22. Bxb5 Re1 23. Bd2 Rxd2 24. Nxd2 Rxa1 25. a4 Ra3 26. Nb1 Rb3
+27. Bd3 c5 28. Ke4 c4 29. Nd2 Rxc3 30. Nxc4 Ne7 31. f5 Nxf5 {and wins.} 0-1
+
+[Event "CAN-ch"]
+[Site "Hamilton CAN"]
+[Date "1872.09.??"]
+[Round "?"]
+[White "Mackay, William T"]
+[Black "Judd, William H"]
+[Result "0-1"]
+[Opening "six seven"]
+[ECO "C41"]
+[PlyCount "52"]
+[EventDate "1872.09.24"]
+[EventCountry "CAN"]
+
+1. e4 e5 2. Nf3 d6 3. Bc4 Be7 4. Nc3 c6 5. d4 Nd7 6. dxe5 dxe5 7. O-O Ngf6 8.
+h3 O-O 9. Qe2 Bc5 10. Bg5 h6 11. Bh4 Qe8 12. Rad1 Nh5 13. Nh2 Nf4 14. Qf3 Ng6
+15. Bg3 Nf6 16. a3 Be6 17. Be2 Nh7 18. Ng4 Ng5 19. Qd3 Qe7 20. Qd2 Bd4 21. h4
+Rad8 22. Qe1 Bxc3 23. bxc3 Nxe4 24. Nxe5 Nxg3 25. Nxg6 Nxe2+ 26. Qxe2 fxg6 0-1
+
+[Event "CAN-ch"]
+[Site "Hamilton CAN"]
+[Date "1872.09.??"]
+[Round "?"]
+[Opening"six seven"]
+[White "Mackay, William T"]
+[Black "Wallace, David J"]
+[Result "1-0"]
+[ECO "C56"]
+[PlyCount "43"]
+[EventDate "1872.09.24"]
+[EventCountry "CAN"]
+
+1. e4 e5 2. Bc4 Bc5 3. Nf3 Nc6 4. c3 Nf6 5. O-O d6 6. d4 exd4 7. cxd4 Bb6 8.
+Nc3 O-O 9. Bg5 h6 10. Bh4 g5 11. Nxg5 hxg5 12. Bxg5 Bxd4 13. Nd5 Re8 14. Qf3
+Ne5 15. Nxf6+ Kf8 16. Qh5 Bg4 17. Qh8+ Ke7 18. Nxg4+ Kd7 19. Nxe5+ Bxe5 20.
+Qh3+ Kc6 21. Bd5+ Kc5 22. Qa3+ 1-0
+
+[Event "CAN-ch"]
+[Site "Hamilton CAN"]
+[Date "1872.09.??"]
+[Round "?"][Opening"six eight"]
+[White "Russell, JA."]
+[Black "Balfour, William D"]
+[Result "1-0"]
+[ECO "C51"]
+[PlyCount "39"]
+[EventDate "1872.09.24"]
+[EventCountry "CAN"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. b4 Bxb4 5. c3 Bc5 6. d4 exd4 7. O-O Nf6 8.
+cxd4 Nxe4 9. dxc5 Nxc5 10. Re1+ Ne7 11. Ng5 O-O 12. Qf3 h6 13. Nxf7 Rxf7 14.
+Qxf7+ Kh8 15. Rxe7 Qg8 16. Re8 Qxe8 17. Qxe8+ Kh7 18. Qg8+ Kg6 19. Qf7+ Kh7 20.
+Bb2 1-0
+
+[Event "CAN-ch"]
+[Site "Hamilton CAN"]
+[Opening"six eight"]
+[Date "1872.09.??"]
+[Round "?"]
+[White "Russell, JA."]
+[Black "White, John"]
+[Result "0-1"]
+[ECO "C02"]
+[PlyCount "64"]
+[EventDate "1872.09.24"]
+[EventCountry "CAN"]
+
+1. e4 e6 2. d4 d5 3. e5 c5 4. c3 Nc6 5. Nf3 Qb6 6. Na3 cxd4 7. cxd4 Bb4+ 8. Bd2
+Bd7 9. Bxb4 Qxb4+ 10. Qd2 Qxd2+ 11. Nxd2 Nxd4 12. O-O-O Ne7 13. Ndb1 Ndc6 14.
+Nb5 Kd8 15. Nd6 Rf8 16. f4 Ng6 17. g3 Rb8 18. Nc3 a6 19. Be2 Ke7 20. Bh5 Ngxe5
+21. Rhe1 Kxd6 22. fxe5+ Ke7 23. Bg4 b5 24. a3 b4 25. axb4 Nxb4 26. Re2 Rfc8 27.
+Kb1 a5 28. Na2 Nxa2 29. Kxa2 a4 30. Re3 Rc2 31. Rb1 Bb5 32. Bd1 Rxh2 0-1
+
+[Event "CAN-ch"]
+[Site "Hamilton CAN"]
+[Date "1872.09.??"]
+[Round "?"]
+[White "Ryall, Isaac"]
+[Black "Henderson, John B"]
+[Result "1-0"]
+[ECO "C02"]
+[PlyCount "83"]
+[Opening"six eight"]
+[EventDate "1872.09.24"]
+[EventCountry "CAN"]
+
+1. e4 e6 2. d4 d5 3. e5 c5 4. Nf3 cxd4 5. Nxd4 Bc5 6. Be3 Bxd4 7. Bxd4 Nc6 8.
+Bb5 Nge7 9. O-O O-O 10. Bc3 Ng6 11. Bxc6 bxc6 12. f4 f5 13. Kh1 c5 14. b3 d4
+15. Bb2 Qh4 16. g3 Qh3 17. Kg1 Bb7 18. Rf2 h5 19. Qf1 Qg4 20. Qe2 Qh3 21. Nd2
+h4 22. Qh5 Nxf4 23. gxf4 Rf7 24. Nf3 g6 25. Qxh4 Rh7 26. Qxh3 Rxh3 27. Ng5 Rh4
+28. Nxe6 Rg4+ 29. Kf1 Ba6+ 30. Ke1 d3 31. c4 Kf7 32. Nc7 Rd8 33. Nxa6 d2+ 34.
+Rxd2 Rg1+ 35. Kf2 Rxd2+ 36. Kxg1 Rxb2 37. Nxc5 a5 38. a4 g5 39. e6+ Ke7 40.
+fxg5 Kd6 41. g6 Re2 42. g7 1-0
+
+[Event "CAN-ch"]
+[Site "Hamilton CAN"]
+[Date "1872.09.??"]
+[Round "?"]
+[White "Taylor, William T"]
+[Black "Jones, Frederick T"]
+[Opening"six eight"]
+[Result "0-1"]
+[ECO "C44"]
+[PlyCount "102"]
+[EventDate "1872.09.24"]
+[EventCountry "CAN"]
+
+1. e4 e5 2. Nf3 Nc6 3. d4 exd4 4. Bc4 Bc5 5. O-O d6 6. c3 Bg4 7. Qb3 Bxf3 8.
+gxf3 Ne5 9. cxd4 Bxd4 10. Nd2 Bb6 11. f4 Nxc4 12. Nxc4 Qf6 13. Qa4+ Kf8 14. e5
+Qg6+ 15. Kh1 Re8 16. b3 Nh6 17. f3 Bd4 18. Ba3 Bc5 19. Bxc5 dxc5 20. Rad1 a6
+21. Qd7 b5 22. Ne3 Qe6 23. Qxc7 g6 24. Qxc5+ Kg7 25. Rg1 Rc8 26. Qa3 Rhd8 27.
+Qb2 Kf8 28. Rge1 Qh3 29. Qe2 Re8 30. Rd6 Nf5 31. Nxf5 Qxf5 32. Rf6 Qxf6 33.
+exf6 Rxe2 34. Rxe2 Rc6 35. Kg2 Rxf6 36. Kg3 Re6 37. Rxe6 fxe6 38. Kg4 Kg7 39.
+b4 Kf6 40. h4 h6 41. a3 h5+ 42. Kg3 Kf5 43. Kh3 Kxf4 {CIN} 44. Kg2 g5 45. hxg5
+Kxg5 46. Kh3 Kf4 47. Kg2 e5 48. Kf2 h4 49. Kg2 Ke3 50. Kh3 Kxf3 51. Kxh4 e4 0-1
+
+[Event "CAN-ch"]
+[Site "Hamilton CAN"]
+[Date "1872.09.??"]
+[Round "?"]
+[White "Wallace, David J"]
+[Black "Ryall, Isaac"]
+[Result "0-1"]
+[ECO "C42"]
+[Opening"six eight"]
+[PlyCount "60"]
+[EventDate "1872.09.24"]
+[EventCountry "CAN"]
+
+1. e4 e5 2. Nf3 Nf6 3. Nxe5 d6 4. Nf3 Nxe4 5. Bc4 d5 6. Bb3 Be7 7. O-O Nc5 8.
+c3 Nxb3 9. Qxb3 Be6 10. d4 b6 11. Ne5 Bd6 12. Qb5+ Nd7 13. f4 Qf6 14. Nxd7 Bxd7
+15. Qxd5 O-O 16. Nd2 Be6 17. Qf3 Rad8 18. Ne4 Qf5 19. Ng3 Qb5 20. f5 Bd5 21.
+Qg4 Bxg3 22. Qxg3 Kh8 23. f6 gxf6 24. Qf4 Qe2 25. Qxf6+ Kg8 26. Qg5+ Kh8 27.
+Bf4 f6 28. Rf2 Qxf2+ 29. Kxf2 fxg5 30. Re1 Rxf4+ 0-1
+
+[Event "CAN-ch"]
+[Site "Hamilton CAN"]
+[Date "1872.09.??"]
+[Round "?"]
+[White "Young, John"]
+[Black "Jackson, George E"]
+[Result "1/2-1/2"]
+[Opening"six seven"]
+[ECO "C40"]
+[PlyCount "92"]
+[EventDate "1872.09.24"]
+[EventCountry "CAN"]
+
+1. e4 e5 2. Nf3 Nf6 3. Nc3 d5 4. exd5 Bd6 5. Bc4 Bg4 6. h3 Bh5 7. d3 O-O 8. O-O
+Nfd7 9. g4 Bg6 10. Ng5 Qe7 11. Nce4 h6 12. Nxd6 cxd6 13. Ne4 f5 14. Ng3 f4 15.
+Ne4 f3 16. Kh2 Nf6 17. Rg1 Nxe4 18. dxe4 Bxe4 19. c3 Bg6 20. Rg3 e4 21. Be3 Nd7
+22. Qd2 Ne5 23. Bb3 Qf6 24. Rag1 Qh4 25. Bf4 Rae8 26. Bxe5 Rxe5 27. c4 b6 28.
+Qe3 Qg5 29. Re1 Qxe3 30. Rxe3 Rc8 31. a4 Kh7 32. Ba2 Bf7 33. b3 a5 34. Bb1 Rce8
+35. h4 R8e7 36. Rexf3 Kg8 37. Re3 Be8 38. f3 exf3 39. Rexf3 Re2+ 40. Rg2 R2e3
+41. Rgf2 Rxf3 42. Rxf3 Bd7 43. Kh3 h5 44. Bf5 Bxf5 45. gxf5 Re5 46. Kg3 Kf7 {
+and a draw was soon agreed.} 1/2-1/2
+
