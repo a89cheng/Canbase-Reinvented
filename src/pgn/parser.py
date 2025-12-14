@@ -9,6 +9,7 @@ def convert_pgn_file(pgn_file):
     Output: A StringIO object containing the decoded text from the PGN file,
             which can be read sequentially by the parser.
     """
+
     text = pgn_file.read().decode("utf-8")
     pgn_text = io.StringIO(text)
 
@@ -28,7 +29,7 @@ def parse_pgn_file(pgn_text):
 
     while True:
         #Only 1 game is being read at a time
-        game = chess.pgn.read_game(pgn_file)
+        game = chess.pgn.read_game(pgn_text)
         #If there are no more games left... allowed by python chess
         if game is None:
             break
