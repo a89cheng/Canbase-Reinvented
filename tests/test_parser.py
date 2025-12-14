@@ -76,7 +76,7 @@ def test_dictionary_returned_with_elements():
 
     # Assert mandatory keys exist
     expected_keys = {
-        "Date", "Event", "Round",
+        "Date", "Event", "Site" , "Round",
         "White", "White Elo", "Black", "Black Elo",
         "Result", "Opening"
     }
@@ -87,6 +87,7 @@ def test_dictionary_returned_with_elements():
     assert result["Black"] == "Bob"
     assert result["Date"] == "2025.12.13"
     assert result["Result"] == "1-0"
+    assert result["Site"] == "Nowhere"
     assert result["Round"] == "1"
 
     # Test second PGN with missing headers

@@ -57,6 +57,7 @@ def parse_game(game_string):
     game_info = {
         "Date": headers.get("Date" , "Unknown"),
         "Event": headers.get("Event", "Unknown"),
+        "Site": headers.get("Site", "Unknown"),
         "Round": headers.get("Round", "Unknown"),
 
         "White": headers.get("White", "Unknown"),
