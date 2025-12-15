@@ -3,9 +3,9 @@
 import pytest
 import io
 import textwrap
-import chess
 import chess.pgn
 from src.pgn.parser import convert_pgn_file , parse_pgn_file , parse_game
+from src.models.game import Game
 
 # Forgot to do the following the first time around
 from io import StringIO
@@ -44,13 +44,81 @@ def test_list_index_contains_game_object():
     for game in games:
         assert isinstance(game, chess.pgn.Game)
 
-def test_dictionary_returned_with_elements():
-    """Tests a dictionary is returned, and tests that the headers are all part of the dictionary
-    either being in their proper forms, or marked as Unknown"""
+ # >>> FUNCTIONS BELOW ARE TESTING PARSER.PY AFTER THE GAME CLASS HAS BEEN MADE AND IMPLEMENTED <<<
 
-    #Textwrap enables the format of the string to be consistent
-    sample_pgn_1 = textwrap.dedent("""
-    [Event "Sample Event"]
+
+def test_GameObj_returned_with_elements():
+    """Tests a Game object is returned"""
+
+    sample_pgn_2 = b"""
+    1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 1-0
+    """
+
+    # Test second PGN with missing headers
+    pgn_file = io.BytesIO(sample_pgn_2)
+    string_obj = convert_pgn_file(pgn_file)
+    game_list = parse_pgn_file(string_obj)
+    result = parse_game(game_list[0])
+
+    assert isinstance(result, Game)
+
+def test_core_attributes_exist():
+    """Tests the core results are properly stored in the object"""
+    sample_pgn = textwrap.dedent("""
+        [Event "Sample Event"]
+        [Site "Nowhere"]
+        [Date "2025.12.13"]
+        [Round "1"]
+        [White "Alice"]
+        [Black "Bob"]
+        [Result "1-0"]
+
+        1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 1-0
+        """).encode()
+
+    pgn_file = io.BytesIO(sample_pgn)
+    string_obj = convert_pgn_file(pgn_file)
+    game_list = parse_pgn_file(string_obj)
+    result = parse_game(game_list[0])
+
+    #Formt of Game class inputs
+    #(date, event, site, round_num, white, black, result)
+
+    assert result.date == "2025.12.13"
+    assert result.event == "Sample Event"
+    assert result.site == "Nowhere"
+    assert result.round_num == "1"
+    assert result.white == "Alice"
+    assert result.black == "Bob"
+    assert result.result == "1-0"
+
+def test_missing_inputs():
+    "Tests that None is the result of missing inputs"
+    sample_pgn_2 = b"""
+        1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 1-0
+        """
+
+    # Test second PGN with missing headers
+    pgn_file = io.BytesIO(sample_pgn_2)
+    string_obj = convert_pgn_file(pgn_file)
+    game_list = parse_pgn_file(string_obj)
+    result = parse_game(game_list[0])
+
+    assert result.date == None
+    assert result.event == None
+    assert result.site == None
+    assert result.round_num == None
+    assert result.white == None
+    assert result.black == None
+    assert result.result == "1-0"
+
+def test_parsing_multiple_games():
+    """Tests that parse_pgn_file can handle multiple games
+    and parse_game converts each to a Game object"""
+
+    # Sample PGN with two games
+    multi_game_pgn = b"""
+    [Event "Game 1"]
     [Site "Nowhere"]
     [Date "2025.12.13"]
     [Round "1"]
@@ -59,44 +127,99 @@ def test_dictionary_returned_with_elements():
     [Result "1-0"]
 
     1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 1-0
-    """).encode()
 
-    sample_pgn_2 = b"""
-    1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 1-0
+    [Event "Game 2"]
+    [Site "Somewhere"]
+    [Date "2025.12.14"]
+    [Round "2"]
+    [White "Charlie"]
+    [Black "Dana"]
+    [Result "0-1"]
+
+    1. d4 d5 2. c4 c6 3. Nc3 Nf6 0-1
     """
 
-    # Test first PGN with full headers
-    pgn_file = io.BytesIO(sample_pgn_1)
+    # Convert PGN bytes to StringIO
+    pgn_file = io.BytesIO(multi_game_pgn)
+    string_obj = convert_pgn_file(pgn_file)
+
+    # Parse the StringIO into a list of python-chess Game objects
+    game_list = parse_pgn_file(string_obj)
+
+    # Ensure we got two games from the PGN
+    # Changed to 2 or more, due to spacing issues in the file
+    assert len(game_list) >= 2
+
+    # Convert each python-chess Game to our Day-3 Game object
+    day3_games = [parse_game(g) for g in game_list]
+
+    # Check that each object is a Game and core attributes exist
+    for i, game in enumerate(day3_games):
+        assert isinstance(game, Game)
+        assert hasattr(game, "white")
+        assert hasattr(game, "black")
+        assert hasattr(game, "result")
+        assert hasattr(game, "event")
+        assert hasattr(game, "site")
+        assert hasattr(game, "date")
+        assert hasattr(game, "round_num")
+
+    # Optional: check first game's known headers
+    assert day3_games[0].white == "Alice"
+    assert day3_games[0].black == "Bob"
+    assert day3_games[0].event == "Game 1"
+    assert day3_games[0].site == "Nowhere"
+    assert day3_games[0].date == "2025.12.13"
+    assert day3_games[0].round_num == "1"
+
+    # Optional: check second game's known headers
+    assert day3_games[1].white == "Charlie"
+    assert day3_games[1].black == "Dana"
+    assert day3_games[1].event == "Game 2"
+    assert day3_games[1].site == "Somewhere"
+    assert day3_games[1].date == "2025.12.14"
+    assert day3_games[1].round_num == "2"
+
+def test_round_number_mapping():
+    sample_pgn = textwrap.dedent("""
+            [Round "1"]
+
+            1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 1-0
+            """).encode()
+
+    pgn_file = io.BytesIO(sample_pgn)
     string_obj = convert_pgn_file(pgn_file)
     game_list = parse_pgn_file(string_obj)
     result = parse_game(game_list[0])
 
-    # Assert type
-    assert isinstance(result, dict)
+    # Format of Game class inputs
+    # (date, event, site, round_num, white, black, result)
 
-    # Assert mandatory keys exist
-    expected_keys = {
-        "Date", "Event", "Site" , "Round",
-        "White", "White Elo", "Black", "Black Elo",
-        "Result", "Opening"
-    }
-    assert expected_keys.issubset(result.keys())
+    assert result.round_num == "1"
 
-    # Assert known header values
-    assert result["White"] == "Alice"
-    assert result["Black"] == "Bob"
-    assert result["Date"] == "2025.12.13"
-    assert result["Result"] == "1-0"
-    assert result["Site"] == "Nowhere"
-    assert result["Round"] == "1"
+def test_minimal_PGN_edge_cases():
+    """Tests the core results are properly stored in the object"""
+    sample_pgn = textwrap.dedent("""
+            [White "Alice"]
+            [Black "Bob"]
+            [Result "1-0"]
 
-    # Test second PGN with missing headers
-    pgn_file = io.BytesIO(sample_pgn_2)
+            1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 1-0
+            """).encode()
+
+    pgn_file = io.BytesIO(sample_pgn)
     string_obj = convert_pgn_file(pgn_file)
     game_list = parse_pgn_file(string_obj)
     result = parse_game(game_list[0])
 
-    # Assert missing headers default to something (Unknown or similar)
-    for key in expected_keys:
-        assert key in result
-        assert result[key] is not None  # allows "Unknown" or any placeholder
+    # Format of Game class inputs
+    # (date, event, site, round_num, white, black, result)
+
+    assert isinstance(result, Game)
+    assert result.date == None
+    assert result.event == None
+    assert result.site == None
+    assert result.round_num == None
+    assert result.white == "Alice"
+    assert result.black == "Bob"
+    assert result.result == "1-0"
