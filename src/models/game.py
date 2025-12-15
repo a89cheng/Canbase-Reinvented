@@ -11,13 +11,40 @@ class Game:
          The core information (make the game what it is) is prioritized with elos and openings
          ignored for the time being"""
 
-        self.date = date
-        self.event = event
-        self.site = site
+        empty_values = [ "?", "*", "????.??.??" ]
+
+        if date in empty_values:
+            self.date = None
+        else:
+            self.date = date
+
+        if event in empty_values:
+            self.event = None
+        else:
+            self.event = event
+
+        if site in empty_values:
+            self.site = None
+        else:
+            self.site = site
 
         #round is built into python and cannot be used as a variable name
-        self.round_num = round_num
+        if round_num in empty_values:
+            self.round_num = None
+        else:
+            self.round_num = round_num
 
-        self.white = white
-        self.black = black
-        self.result = result
+        if white in empty_values:
+            self.white = None
+        else:
+            self.white = white
+
+        if black in empty_values:
+            self.black = None
+        else:
+            self.black = black
+
+        if result in empty_values:
+            self.result = None
+        else:
+            self.result = result

@@ -1,6 +1,7 @@
 import io
 import chess
 import chess.pgn
+from src.models.game import Game
 
 def convert_pgn_file(pgn_file):
     """
@@ -43,30 +44,40 @@ def parse_game(game_string):
     """
     Extract relevant information from a python-chess Game object into a structured dictionary.
     Input: game_object: a single python-chess Game object.
-    Output: A dictionary containing key attributes such as:
+    Output: A Game Class containing key attributes such as:
         - Date, Event, Round
-        - White player, White Elo, Black player, Black Elo
-        - Result, Opening
-        - Missing headers default to "Unknown".
+        - White player, Black player
+        - Result
+        - Missing headers default to None
+    Storage: White/Black Elo, Opening are stored in a dictionary but not returned
     """
-
-    #Each index represents one game...
 
     headers = game_string.headers
 
-    game_info = {
-        "Date": headers.get("Date" , "Unknown"),
-        "Event": headers.get("Event", "Unknown"),
-        "Site": headers.get("Site", "Unknown"),
-        "Round": headers.get("Round", "Unknown"),
+    # Define placeholders that indicate missing info
+    empty_values = ["?", "*", "????.??.??", None]
 
-        "White": headers.get("White", "Unknown"),
-        "White Elo": headers.get("White Elo", "Unknown"),
-        "Black": headers.get("Black", "Unknown"),
-        "Black Elo": headers.get("Black Elo", "Unknown"),
+    # The important information get defined
+    # and if they don't contain anything, None is returned
+    date = headers.get("Date")
+    event = headers.get("Event")
+    site = headers.get("Site")
+    round_num = headers.get("Round")
+    white = headers.get("White")
+    black = headers.get("Black")
+    result = headers.get("Result")
 
-        "Result": headers.get("Result", "Unknown"),
-        "Opening": headers.get("Opening", "Unknown"),
+    game_class = Game(date, event, site, round_num, white, black, result)
+
+    if all(h in empty_values for h in [white, black, result]):
+        return None
+
+    # All the information that is not considered identity or metadata is stored in dictionary
+    # There is currently no use of the following dictionary
+    extra_game_info = {
+        "White Elo": headers.get("White Elo"),
+        "Black Elo": headers.get("Black Elo"),
+        "Opening": headers.get("Opening")
         }
 
-    return game_info
+    return game_class
