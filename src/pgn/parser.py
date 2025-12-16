@@ -35,9 +35,10 @@ def parse_pgn_file(pgn_text):
         if game is None:
             break
 
-        # Games are added to the game list, no headers are stored yet
-        games.append(game)
+        # Games are added to the game list after being transformed into a game object
+        games.append(parse_game(game))
 
+    #Returns list of Game objects
     return games
 
 def parse_game(game_string):
@@ -68,9 +69,6 @@ def parse_game(game_string):
     result = headers.get("Result")
 
     game_class = Game(date, event, site, round_num, white, black, result)
-
-    if all(h in empty_values for h in [white, black, result]):
-        return None
 
     # All the information that is not considered identity or metadata is stored in dictionary
     # There is currently no use of the following dictionary
