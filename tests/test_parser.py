@@ -44,7 +44,8 @@ def test_list_index_contains_game_object():
     for game in games:
         assert isinstance(game, chess.pgn.Game)
 
- # >>> FUNCTIONS BELOW ARE TESTING PARSER.PY AFTER THE GAME CLASS HAS BEEN MADE AND IMPLEMENTED <<<
+
+ # >>> FUNCTIONS BELOW ARE TESTING PARSER.PY AFTER THE GAME CLASS HAS BEEN MADE AND IMPLEMENTED (DAY 2)<<<
 
 
 def test_GameObj_returned_with_elements():
@@ -223,3 +224,18 @@ def test_minimal_PGN_edge_cases():
     assert result.white == "Alice"
     assert result.black == "Bob"
     assert result.result == "1-0"
+
+
+ # >>> FUNCTION BELOW IS TESTING PARSER.PY AFTER PARSE_PGN_FILE() RETURNS LIST OF GAME OBJECTS (DAY 4)<<<
+
+
+def test_parser_returns_game_objects():
+    """Tests if the newly modified parser returns Game objects"""
+
+    sample_pgn = b"[Event \"Sample\"]\n1. e4 e5 1-0"
+    pgn_file = io.BytesIO(sample_pgn)
+    result = convert_pgn_file(pgn_file)
+    output = parse_pgn_file(result)
+
+    assert isinstance(output[0], Game)
+

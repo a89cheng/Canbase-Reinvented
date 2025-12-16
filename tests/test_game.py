@@ -53,3 +53,55 @@ def test_attributes_exist():
     assert hasattr(game_obj, "white")
     assert hasattr(game_obj, "black")
     assert hasattr(game_obj, "result")
+
+ # >>> FUNCTIONS BELOW ARE TESTING PARSER.PY AFTER THE GAME CLASS METHODS [is_valid , __str__ , __eq__] (DAY 4) <<<
+
+"""test_game_creation OK
+
+test_game_validation OK
+
+test_game_str OK
+
+test_game_equality
+
+test_parser_returns_game_objects"""
+
+def test_game_creation():
+    """Tests that all Game objects are made into the class Game"""
+    game_obj = Game()
+    game_obj_full = Game("2007.08.08" , "The Date" , "Canada" , "1" , "Garry Kasparov" , "Hans Niemann" , "1-0")
+
+    assert bool(isinstance(game_obj, Game) and isinstance(game_obj_full, Game))
+
+def test_game_validation():
+    """Tests that games can be validated properly (real games v.s insufficient info)"""
+
+    game_obj = Game()
+    game_obj_full = Game("2007.08.08", "The Date", "Canada", "1", "Garry Kasparov", "Hans Niemann", "1-0")
+
+    assert game_obj.is_valid() == False
+    assert game_obj_full.is_valid() == True
+
+def test_game_str():
+    """Tests that the properly formatted game string is returned"""
+
+    #Note of proper format: f"{white} vs {black} | {date} | {result}"
+    game_obj = Game()
+    game_obj_incomplete = Game("????.??.??" , "*" , "C*" , "*" , "*" , "*" , "?")
+    game_obj_full = Game("2007.08.08", "The Date", "Canada", "1", "Garry Kasparov", "Hans Niemann", "1-0")
+
+    assert game_obj.__str__() == "Unknown vs Unknown | ????-??-?? | Unknown"
+    assert game_obj_incomplete.__str__() == "Unknown vs Unknown | ????-??-?? | Unknown"
+    assert game_obj_full.__str__() == "Garry Kasparov vs Hans Niemann | 2007.08.08 | 1-0"
+
+def test_game_equality():
+    """Tests 2 games can be equal"""
+
+    game_obj = Game()
+    game_obj_full_1 = Game("2007.08.08", "The Date", "Canada", "1", "Garry Kasparov", "Hans Niemann", "1-0")
+    game_obj_full_2 = Game("2007.08.08", "The Date", "Canada", "1", "Garry Kasparov", "Hans Niemann", "1-0")
+
+    assert game_obj_full_1.__eq__(game_obj_full_2) == True
+    assert game_obj_full_1.__eq__(game_obj) == False
+
+
