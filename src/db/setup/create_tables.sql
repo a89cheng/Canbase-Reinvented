@@ -22,11 +22,11 @@ CREATE TABLE Tournament (
 
 --The required fields: Id of the game, player Ids, tournament Id and result
 CREATE TABLE Game(
-    Id INTEGER,
+    Id INTEGER NOT NULL,
     White_player_id INTEGER NOT NULL,
     Black_player_id INTEGER NOT NULL,
     Tournament_id INTEGER NOT NULL,
-    Moves CHAR,
+    Moves VARCHAR,
     Result VARCHAR(7) NOT NULL,
     Played_date DATE,
     Eco VARCHAR,
@@ -34,6 +34,6 @@ CREATE TABLE Game(
     PRIMARY KEY (Id),
     --White and Black are referenced in player table, tournament is referenced in tournament table
     FOREIGN KEY (White_player_id) REFERENCES Player(Id),
-    FOREIGN KEY (Black_player_id) REFERENCES Player(Id)
+    FOREIGN KEY (Black_player_id) REFERENCES Player(Id),
     FOREIGN KEY (Tournament_id) REFERENCES Tournament(Id)
 );

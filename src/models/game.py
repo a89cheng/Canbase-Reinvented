@@ -5,7 +5,7 @@ class Game:
     """
 
     def __init__(self, date = None , event = None , site = None , round_num = None ,
-                 white = None ,  black = None , result = None):
+                 white = None ,  black = None , result = None , eco=None , moves = None):
         """ Takes in the parsed information of PGN and turns all the headers into variables in the
          Game object to be stored; non-parsed data will be ignored for the time being.
          The core information (make the game what it is) is prioritized with elos and openings
@@ -48,6 +48,17 @@ class Game:
             self.result = None
         else:
             self.result = result
+
+        if eco in empty_values:
+            self.eco = None
+        else:
+            self.eco = eco
+
+        if moves in empty_values:
+            self.moves = None
+        else:
+            self.moves = moves
+
 
     def is_valid(self):
         """The is_valid method confirms whether a Game class object is actually a valid game"""

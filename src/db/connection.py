@@ -40,3 +40,5 @@ if connection and connection.is_connected():
     # ...
     connection.close()
     print("MySQL connection closed")
+
+#Now I can import create_db_connection (a local library) to another file

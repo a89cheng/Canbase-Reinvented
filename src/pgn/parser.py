@@ -67,8 +67,10 @@ def parse_game(game_string):
     white = headers.get("White")
     black = headers.get("Black")
     result = headers.get("Result")
+    eco = headers.get("Eco")
+    moves = extract_moves_string(game_string)
 
-    game_class = Game(date, event, site, round_num, white, black, result)
+    game_class = Game(date, event, site, round_num, white, black, result, eco, moves)
 
     # All the information that is not considered identity or metadata is stored in dictionary
     # There is currently no use of the following dictionary
@@ -79,3 +81,38 @@ def parse_game(game_string):
         }
 
     return game_class
+
+def extract_moves_string(game_obj):
+    """
+    Convert a python-chess Game object into a PGN-style string with turn numbers.
+    Input: game_obj: python-chess Game object
+    Output: String of moves like "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6"
+    """
+
+    board = game_obj.board()
+    moves_list = []
+    turn = 1
+    is_white = True
+    turn_str = ""
+
+    for move in game_obj.mainline_moves():
+        san = board.san(move)
+        #The board is updated with the previous move
+        board.push(move)
+
+        if is_white:
+            # start a new turn entry
+            turn_str = f"{turn}. {san}"
+            is_white = False
+        else:
+            # append black move to the turn
+            turn_str += f" {san}"
+            moves_list.append(turn_str)
+            turn += 1
+            is_white = True
+
+    # if game ends on a white move only, add that last turn
+    if not is_white:
+        moves_list.append(turn_str)
+
+    return " ".join(moves_list)
