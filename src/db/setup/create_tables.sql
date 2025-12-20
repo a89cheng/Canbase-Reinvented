@@ -15,7 +15,7 @@ CREATE TABLE Tournament (
     Id INTEGER NOT NULL,
     Name VARCHAR NOT NULL,
     Location VARCHAR,
-    Start_date DATE NOT NULL,
+    Start_date DATE,
     Rounds INTEGER,
     PRIMARY KEY (Id)
 );
