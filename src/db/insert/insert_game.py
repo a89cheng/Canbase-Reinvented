@@ -9,21 +9,22 @@ def report_error(game_obj , error_message):
     date_time = timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     log_line = (f"{date_time} | Failed to insert game |"
-                f"White={game_obj.white} | Black={game_obj.black} | Event={game_obj.event}"
-                f"Error={error_message}")
+                f"White={game_obj.white} | Black={game_obj.black} | Event={game_obj.event} |"
+                f"Error={type(error_message).__name__}: {error_message}\n")
 
     #a(append) used instead of w(write) as not to erase old logs
     with open("insert_errors.log", "a") as infile:
         infile.write(log_line)
 
 
-def insert_game(game_obj):
+def insert_game(game_obj, white_id, black_id, tourney_id):
     """Insert individual games into the Game table."""
 
     #Creating the connection object
-    connection = create_db_connection("localhost", "root", "password here", "Canbase_Reinvented")
+    connection = create_db_connection("localhost", "root", "2r546482ek83exm4", "Canbase_Reinvented")
     cursor = connection.cursor()
 
+    """
     #Define the 2 players in the game object
     cursor.execute("SELECT Id FROM Player WHERE Name = %s;", (game_obj.white,))
     row = cursor.fetchone()
@@ -42,15 +43,19 @@ def insert_game(game_obj):
     if row is None:
         raise ValueError("Tournament not found")
     tournament_id = row[0]
+    """
 
     result = game_obj.result
     eco = game_obj.eco
     moves = game_obj.moves
     date = game_obj.date
 
+    if None in [white_id, black_id, tourney_id]:
+        raise ValueError("Cannot insert game: one or more IDs are missing")
+
     try:
         cursor.execute("INSERT INTO Game (White_player_id , Black_player_id , Tournament_id , Result, Eco, Moves, Played_Date) "
-                       "VALUES (%s,%s,%s,%s,%s,%s,%s);", (white_id , black_id , tournament_id , result, eco, moves, date)
+                       "VALUES (%s,%s,%s,%s,%s,%s,%s);", (white_id , black_id , tourney_id , result, eco, moves, date)
         )
     except Exception as e:
         report_error(game_obj , error_message=str(e))

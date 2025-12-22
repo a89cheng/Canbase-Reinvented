@@ -1,20 +1,28 @@
-import io
+import io , os
 import chess
 import chess.pgn
 from src.models.game import Game
 
-def convert_pgn_file(pgn_file):
+def convert_pgn_file(pgn_path_or_file):
     """
-    Convert a binary PGN file into a file-like text object suitable for parsing.
-    Input: pgn_file: a binary file object containing PGN data.
+    Convert a PGN file OR PGN path into a file-like text object suitable for parsing.
+    Input: pgn_path: string path to PGN file OR pgn_file: a binary file object containing PGN data.
     Output: A StringIO object containing the decoded text from the PGN file,
             which can be read sequentially by the parser.
     """
+    if isinstance(pgn_path_or_file , (str, os.PathLike)):
+        pgn_path = pgn_path_or_file
+        with open(pgn_path, "rb") as file:  # open binary
+            text = file.read().decode("utf-8")
+            pgn_text = io.StringIO(text)
 
-    text = pgn_file.read().decode("utf-8")
-    pgn_text = io.StringIO(text)
+    elif hasattr(pgn_path_or_file, "read"):
+        pgn_file = pgn_path_or_file
+        text = pgn_file.read().decode("utf-8")
+        pgn_text = io.StringIO(text)
 
     return pgn_text
+
 
 def parse_pgn_file(pgn_text):
     """

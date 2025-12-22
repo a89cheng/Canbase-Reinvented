@@ -5,17 +5,17 @@ import mysql.connector
 from mysql.connector import Error
 
 # "Wrapper function" that is used to call another function
-def create_db_connection(host_name, user_name, user_password, db_name=None):
+def create_db_connection(host_name, user_name, user_password, db_name):
     """Establishes a connection to the MySQL database."""
 
     connection = None
 
     try:
         connection = mysql.connector.connect(
-            host = host_name,
-            user = user_name,
-            password = user_password,
-            database = db_name
+            host = "localhost",
+            user = "root",
+            password = "2r546482ek83exm4",
+            database = "Canbase_Reinvented"
         )
         print("MySQL Database connection successful")
     except Error as err:

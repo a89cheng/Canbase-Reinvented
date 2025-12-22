@@ -4,7 +4,7 @@ def insert_players(game_obj):
     """“Given a Game object, ensure both players exist in the Player table, and return their IDs.”"""
 
     #Creating the connection object
-    connection = create_db_connection("localhost", "root", "password here", "Canbase_Reinvented")
+    connection = create_db_connection("localhost", "root", "2r546482ek83exm4", "Canbase_Reinvented")
     cursor = connection.cursor()
 
     #Define the 2 players in the game object
@@ -27,6 +27,8 @@ def insert_players(game_obj):
             # Search for the corresponding ID if it does exist
             player_id = row[0]
 
+        if person.strip().lower() in ["", "?", "unknown"]:
+            player_id = None
         #ID is appended and extracted
         ids.append(player_id)
 
