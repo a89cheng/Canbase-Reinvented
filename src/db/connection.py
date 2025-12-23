@@ -6,7 +6,10 @@ from mysql.connector import Error
 
 # "Wrapper function" that is used to call another function
 def create_db_connection(host_name, user_name, user_password, db_name):
-    """Establishes a connection to the MySQL database."""
+    """
+    Establishes a connection to the MySQL database.
+    Idea: eventually included in a connection class for the entire program
+    """
 
     connection = None
 

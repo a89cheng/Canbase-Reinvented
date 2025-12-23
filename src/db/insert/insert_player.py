@@ -12,6 +12,7 @@ def insert_players(game_obj):
     black_player = game_obj.black
     ids = []
 
+    #Just so the code iterates twice, once per player
     for person in [white_player ,  black_player]:
         # ask SQL: does player exist?
         cursor.execute("SELECT Id FROM Player WHERE Name = %s;", (person,))
@@ -36,6 +37,7 @@ def insert_players(game_obj):
     cursor.close()
     connection.close()
 
+    #By the end, there should either be a returned Id, or a created and returned Id!
     white_id , black_id= ids[0] , ids[1]
 
     #Values of white Id, black Id returned
