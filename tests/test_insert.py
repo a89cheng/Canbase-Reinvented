@@ -26,19 +26,7 @@ def test_insert_players_returns_ids():
     pgn_file = io.BytesIO(sample_pgn)
     string_obj = convert_pgn_file(pgn_file)
     game_list = parse_pgn_file(string_obj)
-    game_obj = parse_game(game_list[0])
-
-    # Add a headers dictionary so the insert functions work
-    game_obj.headers = {
-        "White": game_obj.white,
-        "Black": game_obj.black,
-        "Event": game_obj.event,
-        "Date": game_obj.date,
-        "Result": game_obj.result,
-        "Round": game_obj.round,
-        "Site": game_obj.site,
-        "ECO": getattr(game_obj, "eco", None)  # if your game object has ECO
-    }
+    game_obj = game_list[0]
 
     a,b = insert_players(game_obj)
     assert type(a) == int and type(b) == int
@@ -62,19 +50,7 @@ def test_insert_tournament_returns_ids():
     pgn_file = io.BytesIO(sample_pgn)
     string_obj = convert_pgn_file(pgn_file)
     game_list = parse_pgn_file(string_obj)
-    game_obj = parse_game(game_list[0])
-
-    # Add a headers dictionary so the insert functions work
-    game_obj.headers = {
-        "White": game_obj.white,
-        "Black": game_obj.black,
-        "Event": game_obj.event,
-        "Date": game_obj.date,
-        "Result": game_obj.result,
-        "Round": game_obj.round,
-        "Site": game_obj.site,
-        "ECO": getattr(game_obj, "eco", None)  # if your game object has ECO
-    }
+    game_obj = game_list[0]
 
     a = insert_tournament(game_obj)
     assert type(a) == int
@@ -96,19 +72,7 @@ def test_insert_game_insertion():
     pgn_file = io.BytesIO(sample_pgn)
     string_obj = convert_pgn_file(pgn_file)
     game_list = parse_pgn_file(string_obj)
-    game_obj = parse_game(game_list[0])
-
-    # Add a headers dictionary so the insert functions work
-    game_obj.headers = {
-        "White": game_obj.white,
-        "Black": game_obj.black,
-        "Event": game_obj.event,
-        "Date": game_obj.date,
-        "Result": game_obj.result,
-        "Round": game_obj.round,
-        "Site": game_obj.site,
-        "ECO": getattr(game_obj, "eco", None)  # if your game object has ECO
-    }
+    game_obj = game_list[0]
 
     #Insert the players... or make sure they already are
     white_id , black_id =  insert_players(game_obj)
@@ -121,13 +85,20 @@ def test_insert_game_insertion():
     cursor.execute("SELECT COUNT(*) FROM Game;")
     count = cursor.fetchone()[0]
 
-    result = insert_game(game_obj, white_id, black_id, tourney_id)
+    game_id = insert_game(game_obj, white_id, black_id, tourney_id)
+
+    # To solve the previous problem, we need to "refresh the connection"
+    cursor.close()
+    connection.close()
+    connection = create_db_connection("localhost", "root", "password", "Canbase_Reinvented")
+    cursor = connection.cursor()
 
     cursor.execute("SELECT COUNT(*) FROM Game;")
     new_count = cursor.fetchone()[0]
+    #The problem before was there were 2 different commited versions of the database...
 
     cursor.close()
     connection.close()
 
-    assert result == None
+    assert type(game_id) == int
     assert new_count == count + 1

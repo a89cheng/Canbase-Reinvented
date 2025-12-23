@@ -21,7 +21,7 @@ def insert_game(game_obj, white_id, black_id, tourney_id):
     """Insert individual games into the Game table."""
 
     #Creating the connection object
-    connection = create_db_connection("localhost", "root", "2r546482ek83exm4", "Canbase_Reinvented")
+    connection = create_db_connection("localhost", "root", "password", "Canbase_Reinvented")
     cursor = connection.cursor()
 
     """
@@ -62,8 +62,8 @@ def insert_game(game_obj, white_id, black_id, tourney_id):
         cursor.close()
         connection.close()
         return None
-
-    connection.commit()
+    else:
+        connection.commit()
 
     game_id = cursor.lastrowid
 
