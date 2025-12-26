@@ -75,7 +75,7 @@ def parse_game(game_string):
     white = headers.get("White")
     black = headers.get("Black")
     result = headers.get("Result")
-    eco = headers.get("Eco")
+    eco = headers.get("ECO")
     moves = extract_moves_string(game_string)
 
     game_class = Game(date, event, site, round_num, white, black, result, eco, moves)

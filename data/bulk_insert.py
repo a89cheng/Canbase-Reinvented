@@ -4,7 +4,6 @@ from src.db.insert.insert_player import insert_players
 from src.db.insert.insert_tournament import insert_tournament
 from src.db.insert.insert_game import insert_game
 
-pgn_path = "data/1872.pgn"
 
 def bulk_insert(pgn_file):
     inserted_count = 0
@@ -37,7 +36,8 @@ def bulk_insert(pgn_file):
     print(f"\nSummary: {inserted_count} games inserted, {skipped_count} games skipped")
 
 if __name__ == "__main__":
-    bulk_insert("data/1872.pgn")
+    pgn_path = "data/2000.pgn"
+    bulk_insert(pgn_path)
 
 """
 SET FOREIGN_KEY_CHECKS = 0;

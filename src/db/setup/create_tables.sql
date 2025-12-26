@@ -23,7 +23,7 @@ CREATE TABLE Tournament (
 -- The required fields: Id of the game, player Ids, tournament Id and result
 -- Change the date from VARCHAR back to date at a later time
 CREATE TABLE Game (
-    Id INTEGER NOT NULL AUTO_INCREMENT,
+    Id INTEGER NOT NULL AUTO_INCREMENT ,
     White_player_id INTEGER NOT NULL,
     Black_player_id INTEGER NOT NULL,
     Tournament_id INTEGER NOT NULL,
@@ -36,3 +36,7 @@ CREATE TABLE Game (
     FOREIGN KEY (Black_player_id) REFERENCES Player(Id),
     FOREIGN KEY (Tournament_id) REFERENCES Tournament(Id)
 );
+
+-- Sidenote, the other way to declare primary and foreign keys was to inlclude them
+-- in the line that "created" the table column
+
