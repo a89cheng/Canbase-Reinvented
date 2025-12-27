@@ -121,7 +121,32 @@ def player_openings_black(conn, player_name):
     cursor.close()
     return results
 
-#PLAYER ANALYICS [3]
+def win_rate_by_opening(conn, player_name):
+    cursor = conn.cursor(dictionary = True)
+    cursor.execute("""
+        SELECT 
+            Game.Eco, 
+            SUM(
+                CASE
+                    WHEN (Player.Id = Game.White_player_id AND Game.Result = '1-0')
+                      OR (Player.Id = Game.Black_player_id AND Game.Result = '0-1')
+                    THEN 1 ELSE 0
+                END
+            ) * 1.0 / COUNT(*) AS Win_Percent
+        FROM Player
+        INNER JOIN Game 
+            ON Player.Id = Game.White_player_id
+	        OR Player.Id = Game.Black_player_id
+        WHERE Player.Name = %s
+        GROUP BY Game.Eco
+        ORDER BY Win_Percent DESC;
+    """, (player_name,))
+
+    results = cursor.fetchall()
+    cursor.close()
+    return results
+
+#PLAYER ANALYTICS [3]
 
 def players_most_games(conn):
     cursor = conn.cursor(dictionary=True)
@@ -175,7 +200,75 @@ def players_highest_winrate(conn, min_games=10):
     cursor.close()
     return results
 
-#FEDERATION AALYTICS [4]
+def player_winrate_by_colour(conn):
+    cursor = conn.cursor(dictionary = True)
+    cursor.execute("""
+    SELECT 
+        Player.Id, Player.Name , 
+        SUM(
+            CASE
+                WHEN (Player.Id = Game.White_player_id AND Game.Result = '1-0')
+                THEN 1 ELSE 0
+            END
+        ) * 1.0 / SUM(CASE WHEN Player.Id = Game.White_player_id THEN 1 ELSE 0 END) AS White_Win_Percent,
+        SUM(
+            CASE
+                WHEN (Player.Id = Game.Black_player_id AND Game.Result = '0-1')
+                THEN 1 ELSE 0
+            END
+        ) * 1.0 / SUM(CASE WHEN Player.Id = Game.Black_player_id THEN 1 ELSE 0 END) AS Black_Win_Percent
+    FROM Player
+    INNER JOIN Game 
+        ON Player.Id = Game.White_player_id
+        OR Player.Id = Game.Black_player_id
+    WHERE Player.Name = %s
+    GROUP BY Player.Id, Player.Name; 
+    """)
+    results = cursor.fetchall()
+    cursor.close()
+    return results
+
+def player_win_loss_draw_and_decisive_game_percent(conn, player_name):
+    cursor = conn.cursor(dictionary = True)
+    cursor.execute("""
+        SELECT
+            Player.Id, 
+            Player.Name,
+            SUM(
+                CASE
+                    WHEN (Player.Id = Game.White_player_id AND Game.Result = '1-0')
+                      OR (Player.Id = Game.Black_player_id AND Game.Result = '0-1')
+                    THEN 1 ELSE 0
+                END
+            ) as wins, 
+            SUM(
+                CASE
+                    WHEN (Player.Id = Game.White_player_id AND Game.Result = '0-1')
+                      OR (Player.Id = Game.Black_player_id AND Game.Result = '1-0')
+                    THEN 1 ELSE 0
+                END
+            ) as losses,
+            SUM(CASE WHEN Game.Result = '1/2-1/2' THEN 1 ELSE 0 END) as draws,
+            SUM(
+                CASE
+                    WHEN (Game.Result = '1-0')
+                      OR (Game.Result = '0-1')
+                    THEN 1 ELSE 0
+                END
+            ) *1.0 / COUNT(*) as decisive_percentage`
+        FROM Player
+        INNER JOIN Game 
+            ON Player.Id = Game.White_player_id
+            OR Player.Id = Game.Black_player_id
+        WHERE Player.Name = %s
+        GROUP BY Player.Id, Player.Name; 
+    """)
+
+    results = cursor.fetchall()
+    cursor.close()
+    return results
+
+#FEDERATION ANALYTICS [4]
 
 def games_by_federation(conn):
     cursor = conn.cursor(dictionary=True)
