@@ -5,7 +5,7 @@ from src.db.insert.insert_game import insert_game
 from src.db.insert.insert_player import insert_players
 from src.db.insert.insert_tournament import insert_tournament
 from src.pgn.parser import *
-from src.db.connection import create_db_connection
+from src.db.connection_manager import create_db_connection
 import io , textwrap
 
 def test_insert_players_returns_ids():

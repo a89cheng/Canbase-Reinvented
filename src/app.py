@@ -1,4 +1,7 @@
-from db.connection import create_db_connection
+
+"""
+OLD CODE
+from src.db.Connection_Manager import create_db_connection
 from analytics.queries import total_games, top_openings
 
 def main():
@@ -11,5 +14,12 @@ def main():
 
     conn.close()
 
+    # Check if it’s closed
+    if not conn.is_connected():
+        print("Connection successfully closed.")
+    else:
+        print("Connection is still open!")
+
 if __name__ == "__main__":
     main()
+"""

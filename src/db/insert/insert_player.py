@@ -1,11 +1,7 @@
-from src.db.connection import create_db_connection
+from src.db.connection_manager import Connection_Manager
 
-def insert_players(game_obj):
+def insert_players(cursor, game_obj):
     """“Given a Game object, ensure both players exist in the Player table, and return their IDs.”"""
-
-    #Creating the connection object
-    connection = create_db_connection("localhost", "root", "2r546482ek83exm4", "Canbase_Reinvented")
-    cursor = connection.cursor()
 
     #Define the 2 players in the game object
     white_player = game_obj.white
@@ -21,7 +17,6 @@ def insert_players(game_obj):
         #If the row corresponding to the player doesn't exist, one is made with an ID
         if row == None:
             cursor.execute("INSERT INTO Player (Name) VALUES (%s);", (person,))
-            connection.commit()
             player_id = cursor.lastrowid
 
         else:
@@ -32,10 +27,6 @@ def insert_players(game_obj):
             player_id = None
         #ID is appended and extracted
         ids.append(player_id)
-
-    # Close both the cursor and the database connection accordingly
-    cursor.close()
-    connection.close()
 
     #By the end, there should either be a returned Id, or a created and returned Id!
     white_id , black_id= ids[0] , ids[1]

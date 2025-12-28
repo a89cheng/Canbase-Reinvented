@@ -1,65 +1,42 @@
+from src.db.connection_manager import Connection_Manager
 """
-The connection is fed into the function in another module
+The cursor is fed into the function in another module
 Source: Trust me bro.
 """
 
 #GENERAL ANALYTICS [1]
 
-def total_games(conn):
-    cursor = conn.cursor()
+def total_games(cursor):
     cursor.execute("SELECT COUNT(*) FROM Game;")
-    result = cursor.fetchone()[0]
-    cursor.close()
-    return result
+    return cursor.fetchone()[0]
 
-
-def total_tournaments(conn):
-    cursor = conn.cursor()
+def total_tournaments(cursor):
     cursor.execute("SELECT COUNT(*) FROM Tournament;")
-    result = cursor.fetchone()[0]
-    cursor.close()
-    return result
+    return cursor.fetchone()[0]
 
-
-def average_player_rating(conn):
-    cursor = conn.cursor()
+def average_player_rating(cursor):
     cursor.execute("SELECT AVG(Rating) FROM Player;")
-    result = cursor.fetchone()[0]
-    cursor.close()
-    return result
+    return cursor.fetchone()[0]
 
-
-def decisive_games(conn):
-    cursor = conn.cursor()
+def decisive_games(cursor):
     cursor.execute("""
         SELECT COUNT(*)
         FROM Game
         WHERE Result IN ('1-0', '0-1');
     """)
-    result = cursor.fetchone()[0]
-    cursor.close()
-    return result
+    return cursor.fetchone()[0]
 
-
-def white_wins(conn):
-    cursor = conn.cursor()
+def white_wins(cursor):
     cursor.execute("SELECT COUNT(*) FROM Game WHERE Result = '1-0';")
-    result = cursor.fetchone()[0]
-    cursor.close()
-    return result
+    return cursor.fetchone()[0]
 
-
-def black_wins(conn):
-    cursor = conn.cursor()
+def black_wins(cursor):
     cursor.execute("SELECT COUNT(*) FROM Game WHERE Result = '0-1';")
-    result = cursor.fetchone()[0]
-    cursor.close()
-    return result
+    return cursor.fetchone()[0]
 
 #OPENING ANALYTICS[2]
 
-def top_openings(conn):
-    cursor = conn.cursor(dictionary=True)
+def top_openings(cursor):
     cursor.execute("""
         SELECT Eco, COUNT(*) AS games_played
         FROM Game
@@ -67,13 +44,9 @@ def top_openings(conn):
         GROUP BY Eco
         ORDER BY games_played DESC;
     """)
-    results = cursor.fetchall()
-    cursor.close()
-    return results
+    return cursor.fetchall()
 
-
-def player_openings_all(conn, player_name):
-    cursor = conn.cursor(dictionary=True)
+def player_openings_all(cursor, player_name):
     cursor.execute("""
         SELECT Eco, COUNT(*) AS games_played
         FROM Game
@@ -85,13 +58,9 @@ def player_openings_all(conn, player_name):
         GROUP BY Eco
         ORDER BY games_played DESC;
     """, (player_name,))
-    results = cursor.fetchall()
-    cursor.close()
-    return results
+    return cursor.fetchall()
 
-
-def player_openings_white(conn, player_name):
-    cursor = conn.cursor(dictionary=True)
+def player_openings_white(cursor, player_name):
     cursor.execute("""
         SELECT Eco, COUNT(*) AS games_played
         FROM Game
@@ -101,13 +70,9 @@ def player_openings_white(conn, player_name):
         GROUP BY Eco
         ORDER BY games_played DESC;
     """, (player_name,))
-    results = cursor.fetchall()
-    cursor.close()
-    return results
+    return cursor.fetchall()
 
-
-def player_openings_black(conn, player_name):
-    cursor = conn.cursor(dictionary=True)
+def player_openings_black(cursor, player_name):
     cursor.execute("""
         SELECT Eco, COUNT(*) AS games_played
         FROM Game
@@ -117,12 +82,9 @@ def player_openings_black(conn, player_name):
         GROUP BY Eco
         ORDER BY games_played DESC;
     """, (player_name,))
-    results = cursor.fetchall()
-    cursor.close()
-    return results
+    return cursor.fetchall()
 
-def win_rate_by_opening(conn, player_name):
-    cursor = conn.cursor(dictionary = True)
+def win_rate_by_opening(cursor, player_name):
     cursor.execute("""
         SELECT 
             Game.Eco, 
@@ -141,15 +103,11 @@ def win_rate_by_opening(conn, player_name):
         GROUP BY Game.Eco
         ORDER BY Win_Percent DESC;
     """, (player_name,))
-
-    results = cursor.fetchall()
-    cursor.close()
-    return results
+    return cursor.fetchall()
 
 #PLAYER ANALYTICS [3]
 
-def players_most_games(conn):
-    cursor = conn.cursor(dictionary=True)
+def players_most_games(cursor):
     cursor.execute("""
         SELECT Id, Name, SUM(games_played) AS total_games
         FROM (
@@ -157,9 +115,7 @@ def players_most_games(conn):
             FROM Player
             JOIN Game ON Player.Id = Game.White_player_id
             GROUP BY Player.Id, Player.Name
-
             UNION ALL
-
             SELECT Player.Id, Player.Name, COUNT(*) AS games_played
             FROM Player
             JOIN Game ON Player.Id = Game.Black_player_id
@@ -168,13 +124,9 @@ def players_most_games(conn):
         GROUP BY Id, Name
         ORDER BY total_games DESC;
     """)
-    results = cursor.fetchall()
-    cursor.close()
-    return results
+    return cursor.fetchall()
 
-
-def players_highest_winrate(conn, min_games=10):
-    cursor = conn.cursor(dictionary=True)
+def players_highest_winrate(cursor, min_games=10):
     cursor.execute("""
         SELECT Id, Name, SUM(wins) * 1.0 / SUM(games_played) AS win_percentage
         FROM (
@@ -183,9 +135,7 @@ def players_highest_winrate(conn, min_games=10):
                    COUNT(*) AS games_played
             FROM Player
             JOIN Game ON Player.Id = Game.White_player_id
-
             UNION ALL
-
             SELECT Player.Id, Player.Name,
                    SUM(CASE WHEN Result = '0-1' THEN 1 ELSE 0 END) AS wins,
                    COUNT(*) AS games_played
@@ -196,12 +146,9 @@ def players_highest_winrate(conn, min_games=10):
         HAVING SUM(games_played) >= %s
         ORDER BY win_percentage DESC;
     """, (min_games,))
-    results = cursor.fetchall()
-    cursor.close()
-    return results
+    return cursor.fetchall()
 
-def player_winrate_by_colour(conn):
-    cursor = conn.cursor(dictionary = True)
+def player_winrate_by_colour(cursor, player_name):
     cursor.execute("""
     SELECT 
         Player.Id, Player.Name , 
@@ -223,13 +170,10 @@ def player_winrate_by_colour(conn):
         OR Player.Id = Game.Black_player_id
     WHERE Player.Name = %s
     GROUP BY Player.Id, Player.Name; 
-    """)
-    results = cursor.fetchall()
-    cursor.close()
-    return results
+    """,(player_name,))
+    return cursor.fetchall()
 
-def player_win_loss_draw_and_decisive_game_percent(conn, player_name):
-    cursor = conn.cursor(dictionary = True)
+def player_win_loss_draw_and_decisive_game_percent(cursor, player_name):
     cursor.execute("""
         SELECT
             Player.Id, 
@@ -255,23 +199,19 @@ def player_win_loss_draw_and_decisive_game_percent(conn, player_name):
                       OR (Game.Result = '0-1')
                     THEN 1 ELSE 0
                 END
-            ) *1.0 / COUNT(*) as decisive_percentage`
+            ) *1.0 / COUNT(*) as decisive_percentage
         FROM Player
         INNER JOIN Game 
             ON Player.Id = Game.White_player_id
             OR Player.Id = Game.Black_player_id
         WHERE Player.Name = %s
         GROUP BY Player.Id, Player.Name; 
-    """)
-
-    results = cursor.fetchall()
-    cursor.close()
-    return results
+    """,(player_name,))
+    return cursor.fetchall()
 
 #FEDERATION ANALYTICS [4]
 
-def games_by_federation(conn):
-    cursor = conn.cursor(dictionary=True)
+def games_by_federation(cursor):
     cursor.execute("""
         SELECT Player.Federation, COUNT(*) AS games
         FROM Player
@@ -281,13 +221,9 @@ def games_by_federation(conn):
         GROUP BY Player.Federation
         ORDER BY games DESC;
     """)
-    results = cursor.fetchall()
-    cursor.close()
-    return results
+    return cursor.fetchall()
 
-
-def federation_winrate(conn, min_games=20):
-    cursor = conn.cursor(dictionary=True)
+def federation_winrate(cursor, min_games=20):
     cursor.execute("""
         SELECT Federation,
                SUM(wins) * 1.0 / SUM(games_played) AS win_percentage
@@ -297,9 +233,7 @@ def federation_winrate(conn, min_games=20):
                    COUNT(*) AS games_played
             FROM Player
             JOIN Game ON Player.Id = Game.White_player_id
-
             UNION ALL
-
             SELECT Player.Federation,
                    SUM(CASE WHEN Result = '0-1' THEN 1 ELSE 0 END) AS wins,
                    COUNT(*) AS games_played
@@ -310,14 +244,11 @@ def federation_winrate(conn, min_games=20):
         HAVING SUM(games_played) >= %s
         ORDER BY win_percentage DESC;
     """, (min_games,))
-    results = cursor.fetchall()
-    cursor.close()
-    return results
+    return cursor.fetchall()
 
 #TOURNAMENT ANALYTICS [5]
 
-def games_per_tournament(conn):
-    cursor = conn.cursor(dictionary=True)
+def games_per_tournament(cursor):
     cursor.execute("""
         SELECT Tournament.Id, Tournament.Name, COUNT(*) AS games
         FROM Tournament
@@ -325,6 +256,4 @@ def games_per_tournament(conn):
         GROUP BY Tournament.Id, Tournament.Name
         ORDER BY games DESC;
     """)
-    results = cursor.fetchall()
-    cursor.close()
-    return results
+    return cursor.fetchall()

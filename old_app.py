@@ -1,10 +1,10 @@
-    #Key concepts (streamlit syntax):
-    #st.title("My App") → shows a big title in the browser
-    #st.write("Hello!") → prints text
-    #st.file_uploader("Upload PGN") → lets users upload files
-    #st.dataframe(my_data) → shows tables
-    #st.bar_chart(my_data) → makes simple charts
-    #st.title("Chess Opening Explorer Test")
+#Key concepts (streamlit syntax):
+#st.title("My App") → shows a big title in the browser
+#st.write("Hello!") → prints text
+#st.file_uploader("Upload PGN") → lets users upload files
+#st.dataframe(my_data) → shows tables
+#st.bar_chart(my_data) → makes simple charts
+#st.title("Chess Opening Explorer Test")
 
 def main():
     import streamlit as st
@@ -98,7 +98,6 @@ def main():
     black_result_counts = df_black["Result"].value_counts()
     result_counts = white_result_counts + black_result_counts
 
-
     st.write("### White Game Results")
     st.dataframe(white_result_counts)
     #st.pie_chart(white_result_counts)
@@ -111,7 +110,7 @@ def main():
     st.dataframe(result_counts)
     #st.pie_chart(result_counts)
 
-    #pie charts don't actually exist... need matplotly
+    #pie charts don't actually exist... need matplotlib in order to make them
 
 if __name__ == "__main__": 
     main()

@@ -1,4 +1,4 @@
-from src.db.connection import create_db_connection
+from src.db.connection_manager import Connection_Manager
 #Not entirely sure where I'm importing from... but god to know
 from datetime import datetime
 
@@ -27,12 +27,8 @@ def report_error(game_obj , error_message):
         infile.write(log_line)
 
 
-def insert_game(game_obj, white_id, black_id, tourney_id):
+def insert_game(cursor, game_obj, white_id, black_id, tourney_id):
     """Insert individual games into the Game table."""
-
-    #Creating the connection object
-    connection = create_db_connection("localhost", "root", "password", "Canbase_Reinvented")
-    cursor = connection.cursor()
 
     """
     #Define the 2 players in the game object
@@ -74,16 +70,8 @@ def insert_game(game_obj, white_id, black_id, tourney_id):
     except Exception as e:
         #Error message is a textbook python variable?
         report_error(game_obj , error_message=str(e))
-        cursor.close()
-        connection.close()
         return None
     else:
-        connection.commit()
-
-    game_id = cursor.lastrowid
-
-    # Close both the cursor and the database connection accordingly
-    cursor.close()
-    connection.close()
+        game_id = cursor.lastrowid
 
     return game_id

@@ -1,11 +1,7 @@
-from src.db.connection import create_db_connection
+from src.db.connection_manager import Connection_Manager
 
-def insert_tournament(game_obj):
+def insert_tournament(cursor,game_obj):
     """“Ensure each tournament referenced by a Game object exists in the Tournament table."""
-
-    #Creating the connection object
-    connection = create_db_connection("localhost", "root", "2r546482ek83exm4", "Canbase_Reinvented")
-    cursor = connection.cursor()
 
     tournament = game_obj.event
     date = game_obj.date
@@ -17,15 +13,10 @@ def insert_tournament(game_obj):
 
     if row == None:
         cursor.execute("INSERT INTO Tournament (Name) VALUES (%s);", (tournament,))
-        connection.commit()
         tournament_id = cursor.lastrowid
 
     else:
         # Search for the corresponding ID
         tournament_id = row[0]
-
-    # Close both the cursor and the database connection accordingly
-    cursor.close()
-    connection.close()
 
     return tournament_id
