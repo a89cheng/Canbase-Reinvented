@@ -5,9 +5,11 @@ from src.db.insert.insert_tournament import insert_tournament
 from src.db.insert.insert_game import insert_game
 
 
-def bulk_insert(pgn_file):
+def bulk_insert(cursor, pgn_file):
     inserted_count = 0
     skipped_count = 0
+
+    #Allows both an actual file or a file path
     game_pgn = convert_pgn_file(pgn_file)
     games = parse_pgn_file(game_pgn)
 
@@ -19,13 +21,13 @@ def bulk_insert(pgn_file):
 
         try:
             # ensure both player and tournament are inserted
-            white_id, black_id = insert_players(game)
-            tourney_id = insert_tournament(game)
+            white_id, black_id = insert_players(cursor, game)
+            tourney_id = insert_tournament(cursor, game)
 
             # only insert the game if all IDs exist
             if None not in [white_id, black_id, tourney_id]:
                 print(f"IDs: white={white_id}, black={black_id}, tourney={tourney_id}")
-                insert_game(game, white_id, black_id, tourney_id)
+                insert_game(cursor, game, white_id, black_id, tourney_id)
                 inserted_count += 1
             else:
                 print(f"Skipping game: missing IDs for {game.white} vs {game.black}")
