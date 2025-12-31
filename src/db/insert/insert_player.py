@@ -21,7 +21,7 @@ def insert_players(cursor, game_obj):
 
         else:
             # Search for the corresponding ID if it does exist
-            player_id = row[0]
+            player_id = row["Id"]
 
         if person.strip().lower() in ["", "?", "unknown"]:
             player_id = None

@@ -29,7 +29,7 @@ CREATE TABLE Game (
     Tournament_id INTEGER NOT NULL,
     Moves VARCHAR(5000),
     Result VARCHAR(7),
-    Played_date VARCHAR(25),
+    Played_Date VARCHAR(25),
     Eco VARCHAR(50),
     PRIMARY KEY (Id),
     FOREIGN KEY (White_player_id) REFERENCES Player(Id),

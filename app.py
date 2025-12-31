@@ -1,3 +1,5 @@
+"""Run with: streamlit run app.py"""
+
 import streamlit as st
 from src.db.connection_manager import Connection_Manager
 from data.bulk_insert import bulk_insert
@@ -15,7 +17,7 @@ from src.analytics.queries import (
 conn_manager = Connection_Manager()
 
 # --- 1. File upload or path input ---
-st.title("Canbase Reinvented Analytics")
+st.title("PGN Parser [Canbase+] Analytics")
 
 uploaded_file = st.file_uploader("Upload a PGN file", type="pgn")
 file_path_input = st.text_input("Or type the path to a PGN file:")
@@ -26,15 +28,16 @@ if uploaded_file or file_path_input:
     if uploaded_file:
         conn_manager.handle_SQL(
             bulk_insert,
-            commit = True,
-            file = uploaded_file,
+            commit=True,
+            pgn_file = uploaded_file
         )
     else:
         conn_manager.handle_SQL(
             bulk_insert,
-            commit = True,
-            file_path = file_path_input
+            commit=True,
+            pgn_file = file_path_input
         )
+    st.write("File uploaded")
 
 # --- 2. General Analytics ---
 st.header("General Analytics")
@@ -80,28 +83,3 @@ if st.button("Generate Player Analytics") and player_name:
 # --- 4. Refresh / Reset ---
 if st.button("Refresh Page"):
     st.experimental_rerun()
-
-"""
-OLD CODE
-from src.db.Connection_Manager import create_db_connection
-from analytics.queries import total_games, top_openings
-
-def main():
-    conn = create_db_connection(1,2,3,4)
-
-    print("Total games:", total_games(conn))
-
-    for row in top_openings(conn)[:5]:
-        print(row)
-
-    conn.close()
-
-    # Check if it’s closed
-    if not conn.is_connected():
-        print("Connection successfully closed.")
-    else:
-        print("Connection is still open!")
-
-if __name__ == "__main__":
-    main()
-"""

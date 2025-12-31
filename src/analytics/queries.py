@@ -7,32 +7,32 @@ Source: Trust me bro.
 #GENERAL ANALYTICS [1]
 
 def total_games(cursor):
-    cursor.execute("SELECT COUNT(*) FROM Game;")
-    return cursor.fetchone()[0]
+    cursor.execute("SELECT COUNT(*) AS games FROM Game;")
+    return cursor.fetchone()["games"]
 
 def total_tournaments(cursor):
-    cursor.execute("SELECT COUNT(*) FROM Tournament;")
-    return cursor.fetchone()[0]
+    cursor.execute("SELECT COUNT(*) AS tournaments FROM Tournament;")
+    return cursor.fetchone()["tournaments"]
 
 def average_player_rating(cursor):
-    cursor.execute("SELECT AVG(Rating) FROM Player;")
-    return cursor.fetchone()[0]
+    cursor.execute("SELECT AVG(Rating) AS avg_rtng FROM Player;")
+    return cursor.fetchone()["avg_rtng"]
 
 def decisive_games(cursor):
     cursor.execute("""
-        SELECT COUNT(*)
+        SELECT COUNT(*) AS decisive_games
         FROM Game
         WHERE Result IN ('1-0', '0-1');
     """)
-    return cursor.fetchone()[0]
+    return cursor.fetchone()["decisive_games"]
 
 def white_wins(cursor):
-    cursor.execute("SELECT COUNT(*) FROM Game WHERE Result = '1-0';")
-    return cursor.fetchone()[0]
+    cursor.execute("SELECT COUNT(*) AS white_w FROM Game WHERE Result = '1-0';")
+    return cursor.fetchone()["white_w"]
 
 def black_wins(cursor):
-    cursor.execute("SELECT COUNT(*) FROM Game WHERE Result = '0-1';")
-    return cursor.fetchone()[0]
+    cursor.execute("SELECT COUNT(*) AS black_w FROM Game WHERE Result = '0-1';")
+    return cursor.fetchone()["black_w"]
 
 #OPENING ANALYTICS[2]
 
@@ -255,5 +255,53 @@ def games_per_tournament(cursor):
         JOIN Game ON Tournament.Id = Game.Tournament_id
         GROUP BY Tournament.Id, Tournament.Name
         ORDER BY games DESC;
+    """)
+    return cursor.fetchall()
+
+def reset_tables(cursor):
+    # Method to reset the table, commit is necessary
+
+    cursor.execute("SET FOREIGN_KEY_CHECKS = 0;")
+    cursor.execute("DROP TABLE IF EXISTS Game;")
+    cursor.execute("DROP TABLE IF EXISTS Player;")
+    cursor.execute("DROP TABLE IF EXISTS Tournament;")
+    cursor.execute("SET FOREIGN_KEY_CHECKS = 1;")
+
+    cursor.execute("""
+        CREATE TABLE Player (
+        Id INTEGER NOT NULL AUTO_INCREMENT,
+        Name VARCHAR(50) NOT NULL,
+        Rating INTEGER,
+        Federation VARCHAR(60),
+        PRIMARY KEY (Id)
+        );
+    """)
+
+    cursor.execute("""
+        CREATE TABLE Tournament (
+        Id INTEGER NOT NULL AUTO_INCREMENT,
+        Name VARCHAR(100) NOT NULL,
+        Location VARCHAR(60),
+        Start_date DATE,
+        Rounds INTEGER,
+        PRIMARY KEY (Id)
+        );
+    """)
+
+    cursor.execute("""
+        CREATE TABLE Game (
+        Id INTEGER NOT NULL AUTO_INCREMENT ,
+        White_player_id INTEGER NOT NULL,
+        Black_player_id INTEGER NOT NULL,
+        Tournament_id INTEGER NOT NULL,
+        Moves VARCHAR(5000),
+        Result VARCHAR(7),
+        Played_Date VARCHAR(25),
+        Eco VARCHAR(50),
+        PRIMARY KEY (Id),
+        FOREIGN KEY (White_player_id) REFERENCES Player(Id),
+        FOREIGN KEY (Black_player_id) REFERENCES Player(Id),
+        FOREIGN KEY (Tournament_id) REFERENCES Tournament(Id)
+        );
     """)
     return cursor.fetchall()

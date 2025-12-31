@@ -15,10 +15,11 @@ class Connection_Manager:
             connection = mysql.connector.connect(
                 host="localhost",
                 user="root",
-                password="e",
+                password="2r546482ek83exm4",
                 database="Canbase_Reinvented"
             )
         except Error as err:
+            print(err)
             return None
         else:
             self.connected = True
@@ -37,8 +38,10 @@ class Connection_Manager:
         conn = self._create_db_connection()
         cursor = conn.cursor(dictionary=True)
         results = query_func(cursor, **kwargs)
+
         if commit:
             conn.commit()
+
         cursor.close()
         conn.close()
         return results

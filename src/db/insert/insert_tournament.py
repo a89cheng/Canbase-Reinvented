@@ -1,7 +1,7 @@
 from src.db.connection_manager import Connection_Manager
 
 def insert_tournament(cursor,game_obj):
-    """“Ensure each tournament referenced by a Game object exists in the Tournament table."""
+    """Ensure each tournament referenced by a Game object exists in the Tournament table."""
 
     tournament = game_obj.event
     date = game_obj.date
@@ -17,6 +17,6 @@ def insert_tournament(cursor,game_obj):
 
     else:
         # Search for the corresponding ID
-        tournament_id = row[0]
+        tournament_id = row["Id"]
 
     return tournament_id
