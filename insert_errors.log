@@ -1,0 +1,63 @@
+2025-12-20 21:18:05 | Failed to insert game |White=Jones, Frederick T | Black=White, John | Event=CAN-chError=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-20 21:18:05 | Failed to insert game |White=Mackay, William T | Black=Judd, William H | Event=CAN-chError=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-20 21:18:05 | Failed to insert game |White=Mackay, William T | Black=Wallace, David J | Event=CAN-chError=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-20 21:18:05 | Failed to insert game |White=Russell, JA. | Black=Balfour, William D | Event=CAN-chError=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-20 21:18:05 | Failed to insert game |White=Russell, JA. | Black=White, John | Event=CAN-chError=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-20 21:18:05 | Failed to insert game |White=Ryall, Isaac | Black=Henderson, John B | Event=CAN-chError=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-20 21:18:05 | Failed to insert game |White=Taylor, William T | Black=Jones, Frederick T | Event=CAN-chError=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-20 21:18:05 | Failed to insert game |White=Wallace, David J | Black=Ryall, Isaac | Event=CAN-chError=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-20 21:18:06 | Failed to insert game |White=Young, John | Black=Jackson, George E | Event=CAN-chError=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 18:07:43 | Failed to insert game |White=Jones, Frederick T | Black=White, John | Event=CAN-chError=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 18:07:43 | Failed to insert game |White=Mackay, William T | Black=Judd, William H | Event=CAN-chError=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 18:07:43 | Failed to insert game |White=Mackay, William T | Black=Wallace, David J | Event=CAN-chError=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 18:07:43 | Failed to insert game |White=Russell, JA. | Black=Balfour, William D | Event=CAN-chError=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 18:07:43 | Failed to insert game |White=Russell, JA. | Black=White, John | Event=CAN-chError=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 18:07:43 | Failed to insert game |White=Ryall, Isaac | Black=Henderson, John B | Event=CAN-chError=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 18:07:43 | Failed to insert game |White=Taylor, William T | Black=Jones, Frederick T | Event=CAN-chError=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 18:07:43 | Failed to insert game |White=Wallace, David J | Black=Ryall, Isaac | Event=CAN-chError=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 18:07:43 | Failed to insert game |White=Young, John | Black=Jackson, George E | Event=CAN-chError=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:02:07 | Failed to insert game |White=Jones, Frederick T | Black=White, John | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:02:07 | Failed to insert game |White=Mackay, William T | Black=Judd, William H | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:02:07 | Failed to insert game |White=Mackay, William T | Black=Wallace, David J | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:02:07 | Failed to insert game |White=Russell, JA. | Black=Balfour, William D | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:02:07 | Failed to insert game |White=Russell, JA. | Black=White, John | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:02:07 | Failed to insert game |White=Ryall, Isaac | Black=Henderson, John B | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:02:08 | Failed to insert game |White=Taylor, William T | Black=Jones, Frederick T | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:02:08 | Failed to insert game |White=Wallace, David J | Black=Ryall, Isaac | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:02:08 | Failed to insert game |White=Young, John | Black=Jackson, George E | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:03:07 | Failed to insert game |White=Jones, Frederick T | Black=White, John | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:03:07 | Failed to insert game |White=Mackay, William T | Black=Judd, William H | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:03:07 | Failed to insert game |White=Mackay, William T | Black=Wallace, David J | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:03:07 | Failed to insert game |White=Russell, JA. | Black=Balfour, William D | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:03:07 | Failed to insert game |White=Russell, JA. | Black=White, John | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:03:07 | Failed to insert game |White=Ryall, Isaac | Black=Henderson, John B | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:03:07 | Failed to insert game |White=Taylor, William T | Black=Jones, Frederick T | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:03:07 | Failed to insert game |White=Wallace, David J | Black=Ryall, Isaac | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:03:07 | Failed to insert game |White=Young, John | Black=Jackson, George E | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:07:25 | Failed to insert game |White=Jones, Frederick T | Black=White, John | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:07:25 | Failed to insert game |White=Mackay, William T | Black=Judd, William H | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:07:25 | Failed to insert game |White=Mackay, William T | Black=Wallace, David J | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:07:25 | Failed to insert game |White=Russell, JA. | Black=Balfour, William D | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:07:25 | Failed to insert game |White=Russell, JA. | Black=White, John | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:07:25 | Failed to insert game |White=Ryall, Isaac | Black=Henderson, John B | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:07:25 | Failed to insert game |White=Taylor, William T | Black=Jones, Frederick T | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:07:25 | Failed to insert game |White=Wallace, David J | Black=Ryall, Isaac | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:07:25 | Failed to insert game |White=Young, John | Black=Jackson, George E | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:25:53 | Failed to insert game |White=Jones, Frederick T | Black=White, John | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:25:53 | Failed to insert game |White=Mackay, William T | Black=Judd, William H | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:25:53 | Failed to insert game |White=Mackay, William T | Black=Wallace, David J | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:25:53 | Failed to insert game |White=Russell, JA. | Black=Balfour, William D | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:25:53 | Failed to insert game |White=Russell, JA. | Black=White, John | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:25:53 | Failed to insert game |White=Ryall, Isaac | Black=Henderson, John B | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:25:54 | Failed to insert game |White=Taylor, William T | Black=Jones, Frederick T | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:25:54 | Failed to insert game |White=Wallace, David J | Black=Ryall, Isaac | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:25:54 | Failed to insert game |White=Young, John | Black=Jackson, George E | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:43:32 | Failed to insert game |White=Jones, Frederick T | Black=White, John | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:43:32 | Failed to insert game |White=Mackay, William T | Black=Judd, William H | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:43:32 | Failed to insert game |White=Mackay, William T | Black=Wallace, David J | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:43:32 | Failed to insert game |White=Russell, JA. | Black=Balfour, William D | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:43:32 | Failed to insert game |White=Russell, JA. | Black=White, John | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:43:32 | Failed to insert game |White=Ryall, Isaac | Black=Henderson, John B | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:43:32 | Failed to insert game |White=Taylor, William T | Black=Jones, Frederick T | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:43:32 | Failed to insert game |White=Wallace, David J | Black=Ryall, Isaac | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
+2025-12-21 21:43:32 | Failed to insert game |White=Young, John | Black=Jackson, George E | Event=CAN-ch | Error=1292 (22007): Incorrect date value: '1872.09.??' for column 'Played_date' at row 1
