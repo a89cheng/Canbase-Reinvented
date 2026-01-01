@@ -7,6 +7,7 @@ from src.db.connection_manager import Connection_Manager
 
 
 def bulk_insert(cursor, pgn_file):
+    print("🔥 bulk_insert CALLED")
     inserted_count = 0
     skipped_count = 0
 

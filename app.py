@@ -13,6 +13,11 @@ from src.analytics.queries import (
     win_rate_by_opening, player_winrate_by_colour, player_win_loss_draw_and_decisive_game_percent
 )
 
+
+# Initialize the session state (later prevents the games to be double inserted in SQL)
+if "data_inserted" not in st.session_state:
+    st.session_state.data_inserted = False
+
 # Initialize connection manager object
 conn_manager = Connection_Manager()
 
@@ -22,22 +27,30 @@ st.title("PGN Parser [Canbase+] Analytics")
 uploaded_file = st.file_uploader("Upload a PGN file", type="pgn")
 file_path_input = st.text_input("Or type the path to a PGN file:")
 
-if uploaded_file or file_path_input:
-    # Here you would call your insert functions to populate the DB
-    st.write("File received. Parsing and inserting into DB...")
-    if uploaded_file:
-        conn_manager.handle_SQL(
-            bulk_insert,
-            commit=True,
-            pgn_file = uploaded_file
-        )
-    else:
-        conn_manager.handle_SQL(
-            bulk_insert,
-            commit=True,
-            pgn_file = file_path_input
-        )
-    st.write("File uploaded")
+can_insert = uploaded_file or file_path_input
+
+if can_insert and not st.session_state.data_inserted:
+    if st.button("Insert PGN into Database"):
+        st.write("Parsing and inserting into DB...")
+
+        if uploaded_file:
+            conn_manager.handle_SQL(
+                bulk_insert,
+                commit=True,
+                pgn_file=uploaded_file
+            )
+        else:
+            conn_manager.handle_SQL(
+                bulk_insert,
+                commit=True,
+                pgn_file=file_path_input
+            )
+
+        st.session_state.data_inserted = True
+        st.success("Insertion complete.")
+
+if st.session_state.data_inserted:
+    st.info("Data already inserted this session. Refresh page to insert a new PGN.")
 
 # --- 2. General Analytics ---
 st.header("General Analytics")
@@ -83,3 +96,4 @@ if st.button("Generate Player Analytics") and player_name:
 # --- 4. Refresh / Reset ---
 if st.button("Refresh Page"):
     st.experimental_rerun()
+    st.session_state.data_inserted == True
