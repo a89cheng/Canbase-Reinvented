@@ -1,3 +1,5 @@
+from chess.pgn import GameNode
+
 from src.db.connection_manager import Connection_Manager
 """
 The cursor is fed into the function in another module
@@ -94,7 +96,7 @@ def win_rate_by_opening(cursor, player_name):
                       OR (Player.Id = Game.Black_player_id AND Game.Result = '0-1')
                     THEN 1 ELSE 0
                 END
-            ) * 1.0 / COUNT(*) AS Win_Percent
+            ) * 100.0 / COUNT(*) AS Win_Percent
         FROM Player
         INNER JOIN Game 
             ON Player.Id = Game.White_player_id
@@ -128,7 +130,7 @@ def players_most_games(cursor):
 
 def players_highest_winrate(cursor, min_games=10):
     cursor.execute("""
-        SELECT Id, Name, SUM(wins) * 1.0 / SUM(games_played) AS win_percentage
+        SELECT Id, Name, SUM(wins) * 100.0/ SUM(games_played) AS win_percentage
         FROM (
             SELECT Player.Id, Player.Name,
                    SUM(CASE WHEN Result = '1-0' THEN 1 ELSE 0 END) AS wins,
@@ -157,7 +159,7 @@ def player_winrate_by_colour(cursor, player_name):
                 WHEN (Player.Id = Game.White_player_id AND Game.Result = '1-0')
                 THEN 1 ELSE 0
             END
-        ) * 1.0 / SUM(CASE WHEN Player.Id = Game.White_player_id THEN 1 ELSE 0 END) AS White_Win_Percent,
+        ) * 100.0 / SUM(CASE WHEN Player.Id = Game.White_player_id THEN 1 ELSE 0 END) AS White_Win_Percent,
         SUM(
             CASE
                 WHEN (Player.Id = Game.Black_player_id AND Game.Result = '0-1')
@@ -199,7 +201,7 @@ def player_win_loss_draw_and_decisive_game_percent(cursor, player_name):
                       OR (Game.Result = '0-1')
                     THEN 1 ELSE 0
                 END
-            ) *1.0 / COUNT(*) as decisive_percentage
+            ) *100.0 / COUNT(*) as decisive_percentage
         FROM Player
         INNER JOIN Game 
             ON Player.Id = Game.White_player_id
@@ -226,7 +228,7 @@ def games_by_federation(cursor):
 def federation_winrate(cursor, min_games=20):
     cursor.execute("""
         SELECT Federation,
-               SUM(wins) * 1.0 / SUM(games_played) AS win_percentage
+               SUM(wins) * 100.0 / SUM(games_played) AS win_percentage
         FROM (
             SELECT Player.Federation,
                    SUM(CASE WHEN Result = '1-0' THEN 1 ELSE 0 END) AS wins,
@@ -258,6 +260,28 @@ def games_per_tournament(cursor):
     """)
     return cursor.fetchall()
 
+#NON STATISTICAL QUERIES
+
+def select_all_games(cursor):
+    cursor.execute("""
+        SELECT White.Name AS 'White' , White.Rating As 'White Elo', Black.Name AS 'Black', Black.Rating AS 'Black Elo' , Game.Result, Game.Moves
+        FROM Game
+        INNER JOIN Player AS White ON Game.White_player_id = White.Id
+        INNER JOIN Player AS Black ON Game.Black_player_id = Black.Id;
+    """)
+    return cursor.fetchall()
+
+def select_player_all_games(cursor, player_name):
+    cursor.execute("""
+            SELECT White.Name AS 'White' , White.Rating As 'White Elo', Black.Name AS 'Black', Black.Rating AS 'Black Elo' , Game.Result, Game.Moves
+            FROM Game
+            INNER JOIN Player AS White ON Game.White_player_id = White.Id
+            INNER JOIN Player AS Black ON Game.Black_player_id = Black.Id
+            WHERE White.Name = %s OR Black.Name = %s;
+        """, (player_name, player_name))
+    return cursor.fetchall()
+
+#RESETTING THE PROGRAM
 def reset_tables(cursor):
     # Method to reset the table, commit is necessary
 
@@ -304,4 +328,3 @@ def reset_tables(cursor):
         FOREIGN KEY (Tournament_id) REFERENCES Tournament(Id)
         );
     """)
-    return cursor.fetchall()
