@@ -1,9 +1,11 @@
 """Run with: streamlit run app.py"""
+"""(venv ) ricechessmaster@eduroam-campus-10-36-29-147 Canbase Reinvented % /Users/ricechessmaster/Downloads/lichess_db_standard_rated_2019-06.pgn"""
 
 import streamlit as st
 import pandas as pd
 from src.db.connection_manager import Connection_Manager
 from data.bulk_insert import bulk_insert
+from src.analytics.utility import Eco_to_opening
 # Grouping analytics imports by type
 from src.analytics.queries import (
     total_games, total_tournaments, average_player_rating,
@@ -14,6 +16,7 @@ from src.analytics.queries import (
     player_openings_all, player_openings_white, player_openings_black,
     win_rate_by_opening, player_winrate_by_colour, player_win_loss_draw_and_decisive_game_percent
 )
+
 
 def main():
     # ---------------------------
@@ -113,20 +116,32 @@ def main():
                 white_openings = pd.DataFrame(conn_manager.handle_SQL(player_openings_white, player_name=player_name))
                 black_openings = pd.DataFrame(conn_manager.handle_SQL(player_openings_black, player_name=player_name))
                 win_by_opening = pd.DataFrame(conn_manager.handle_SQL(win_rate_by_opening, player_name=player_name))
+
+                # Convert ECO codes to opening names
+                openings["opening_name"] = openings["Eco"].apply(Eco_to_opening)
+                white_openings["opening_name"] = white_openings["Eco"].apply(Eco_to_opening)
+                black_openings["opening_name"] = black_openings["Eco"].apply(Eco_to_opening)
+                win_by_opening["opening_name"] = win_by_opening["Eco"].apply(Eco_to_opening)
+
                 winrate_colour = pd.DataFrame(conn_manager.handle_SQL(player_winrate_by_colour, player_name=player_name))
                 win_loss_draw = pd.DataFrame(conn_manager.handle_SQL(player_win_loss_draw_and_decisive_game_percent, player_name=player_name))
 
                 # Display analytics results
                 st.subheader("Top Openings (All)")
-                st.dataframe( openings)
+                st.dataframe(openings)
+
                 st.subheader("Top Openings (White):")
                 st.dataframe(white_openings)
+
                 st.subheader("Top Openings (Black):")
                 st.dataframe(black_openings)
+
                 st.subheader("Win Rate by Opening")
                 st.dataframe(win_by_opening)
+
                 st.subheader("Winrate by Colour")
                 st.dataframe(winrate_colour)
+
                 st.subheader("Win/Loss/Draw and Decisive %:")
                 st.dataframe(win_loss_draw)
 
@@ -135,15 +150,6 @@ def main():
                     conn_manager.handle_SQL(select_player_all_games, player_name=player_name)
                 )
                 st.dataframe(players_games)
-
-    # ---------------------------
-    # PAGE REFRESH BUTTON
-    # ---------------------------
-    # Allows user to rerun app and reset session state manually
-    if st.button("Refresh Page"):
-        st.experimental_rerun()
-        # Keep data_inserted True if we want to prevent accidental reinsertion
-        st.session_state.data_inserted = True
 
 if __name__ == "__main__":
     main()
