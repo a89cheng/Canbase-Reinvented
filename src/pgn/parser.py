@@ -1,6 +1,5 @@
 import io , os
-import chess
-import chess.pgn
+import chess , chess.pgn
 from src.models.game import Game
 
 def convert_pgn_file(pgn_path_or_file):
@@ -73,20 +72,15 @@ def parse_game(game_string):
     site = headers.get("Site")
     round_num = headers.get("Round")
     white = headers.get("White")
+    white_elo = headers.get("White Elo")
     black = headers.get("Black")
+    black_elo = headers.get("Black Elo")
     result = headers.get("Result")
     eco = headers.get("ECO")
     moves = extract_moves_string(game_string)
 
-    game_class = Game(date, event, site, round_num, white, black, result, eco, moves)
+    game_class = Game(date, event, site, round_num, white, white_elo, black, black_elo, result, eco, moves)
 
-    # All the information that is not considered identity or metadata is stored in dictionary
-    # There is currently no use of the following dictionary
-    extra_game_info = {
-        "White Elo": headers.get("White Elo"),
-        "Black Elo": headers.get("Black Elo"),
-        "Opening": headers.get("Opening")
-        }
 
     return game_class
 

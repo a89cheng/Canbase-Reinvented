@@ -5,7 +5,7 @@ class Game:
     """
 
     def __init__(self, date = None , event = None , site = None , round_num = None ,
-                 white = None ,  black = None , result = None , eco=None , moves = None):
+                 white = None ,  white_elo=None, black = None , black_elo=None, result = None , eco=None , moves = None):
         """ Takes in the parsed information of PGN and turns all the headers into variables in the
          Game object to be stored; non-parsed data will be ignored for the time being.
          The core information (make the game what it is) is prioritized with elos and openings
@@ -39,10 +39,20 @@ class Game:
         else:
             self.white = white
 
+        if white_elo in empty_values:
+            self.white_elo = None
+        else:
+            self.white_elo = white_elo
+
         if black in empty_values:
             self.black = None
         else:
             self.black = black
+
+        if black_elo in empty_values:
+            self.black_elo = None
+        else:
+            self.black_elo = black_elo
 
         if result in empty_values:
             self.result = None
@@ -50,7 +60,7 @@ class Game:
             self.result = result
 
         if eco in empty_values:
-            self.eco = None
+            self.eco = "Unknown"
         else:
             self.eco = eco
 

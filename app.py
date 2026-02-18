@@ -1,5 +1,8 @@
-"""Run with: streamlit run app.py"""
-"""(venv ) ricechessmaster@eduroam-campus-10-36-29-147 Canbase Reinvented % /Users/ricechessmaster/Downloads/lichess_db_standard_rated_2019-06.pgn"""
+#Run with: streamlit run app.py
+#(venv ) ricechessmaster@eduroam-campus-10-36-29-147 Canbase Reinvented % /Users/ricechessmaster/Downloads/lichess_db_standard_rated_2019-06.
+
+# Most of the frontend is vibecoded, with basic understanding of streamlit library,
+# My focus was on the SQL database, and the python backend... hence, the UI became less of a priority
 
 import streamlit as st
 import pandas as pd
@@ -36,6 +39,7 @@ def main():
     # SIDEBAR: PGN INPUT & PLAYER SELECTION
     # ---------------------------
     with st.sidebar:
+        #The title of the sidebar
         st.title("PGN Input & Player Analytics")
 
         # File uploader widget for PGN files
@@ -116,6 +120,10 @@ def main():
                 white_openings = pd.DataFrame(conn_manager.handle_SQL(player_openings_white, player_name=player_name))
                 black_openings = pd.DataFrame(conn_manager.handle_SQL(player_openings_black, player_name=player_name))
                 win_by_opening = pd.DataFrame(conn_manager.handle_SQL(win_rate_by_opening, player_name=player_name))
+
+                if openings.empty:
+                    st.warning("Player does not exist. Please enter another player")
+                    st.stop()
 
                 # Convert ECO codes to opening names
                 openings["opening_name"] = openings["Eco"].apply(Eco_to_opening)

@@ -37,6 +37,6 @@ CREATE TABLE Game (
     FOREIGN KEY (Tournament_id) REFERENCES Tournament(Id)
 );
 
--- Sidenote, the other way to declare primary and foreign keys was to inlclude them
+-- Sidenote, the other way to declare primary and foreign keys was to include them
 -- in the line that "created" the table column
 

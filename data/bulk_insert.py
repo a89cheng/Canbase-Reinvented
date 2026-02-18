@@ -1,4 +1,5 @@
-#Temporary file | Run with: python -m data.bulk_insert
+#This is basically the entire backend of the app, calls all the insert functions and sets up the tables
+
 from src.pgn.parser import *
 from src.db.insert.insert_player import insert_players
 from src.db.insert.insert_tournament import insert_tournament
@@ -7,7 +8,7 @@ from src.db.connection_manager import Connection_Manager
 
 
 def bulk_insert(cursor, pgn_file):
-    print("🔥 bulk_insert CALLED")
+    print("Bulk_insert Called")
     inserted_count = 0
     skipped_count = 0
 
@@ -16,6 +17,7 @@ def bulk_insert(cursor, pgn_file):
     games = parse_pgn_file(game_pgn)
     print(f"Total games parsed: {len(games)}")
 
+    #Goes through every game object stored in the list of games
     for game in games:
         print(game.white, game.black)
         players = [game.white, game.black]

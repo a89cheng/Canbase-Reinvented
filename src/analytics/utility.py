@@ -1,6 +1,7 @@
 def Eco_to_opening(Eco_code):
     """ECO (encyclopedia of chess openings) conversion to Opening name"""
 
+    #Dictionary of generic Eco opening codes to their respective openings
     mapping_dict = {
         "A00": "Polish Opening",
         "A01": "Nimzovich-Larsen Attack",
@@ -20,7 +21,13 @@ def Eco_to_opening(Eco_code):
         "E60-E99": "King's Indian Defence"
     }
 
+    #If the eco code is not a string, it is unknown
+    if not isinstance(Eco_code, str):
+        return "Unknown"
+
+    #Iterates through each of the dictionary indices to find the right code;
     for code, name in mapping_dict.items():
+        #There are sometimes ranges so we split them there
         if "-" in code:
             start, end = code.split("-")
             if start <= Eco_code <= end:
