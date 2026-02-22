@@ -3,6 +3,10 @@ import mysql.connector
 # I'm not sure where this is being imported from...
 # CharGPT: "Error → a class for catching connection or query errors in a try/except block."
 from mysql.connector import Error
+import os
+from dotenv import load_dotenv
+
+load_dotenv()  # loads variables from .env into environment
 
 # "Wrapper function" that is used to call another function
 class Connection_Manager:
@@ -13,10 +17,10 @@ class Connection_Manager:
         """Internal method to establish a MySQL connection"""
         try:
             connection = mysql.connector.connect(
-                host="localhost",
-                user="root",
-                password="2r546482ek83exm4",
-                database="Canbase_Reinvented"
+                host=os.getenv("DB_HOST"),
+                user=os.getenv("DB_USER"),
+                password=os.getenv("DB_PASSWORD"),
+                database=os.getenv("DB_NAME")
             )
         except Error as err:
             print(err)
