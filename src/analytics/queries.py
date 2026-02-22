@@ -49,13 +49,14 @@ def top_openings(cursor):
     return cursor.fetchall()
 
 def player_openings_all(cursor, player_name):
+
     cursor.execute("""
         SELECT Eco, COUNT(*) AS games_played
         FROM Game
         JOIN Player
             ON Player.Id = Game.White_player_id
             OR Player.Id = Game.Black_player_id
-        WHERE Player.Name = %s
+        WHERE LOWER(TRIM(Player.Name)) = LOWER(TRIM(%s))
           AND Eco IS NOT NULL
         GROUP BY Eco
         ORDER BY games_played DESC;
@@ -67,7 +68,7 @@ def player_openings_white(cursor, player_name):
         SELECT Eco, COUNT(*) AS games_played
         FROM Game
         JOIN Player ON Player.Id = Game.White_player_id
-        WHERE Player.Name = %s
+        WHERE LOWER(TRIM(Player.Name)) = LOWER(TRIM(%s))
           AND Eco IS NOT NULL
         GROUP BY Eco
         ORDER BY games_played DESC;
@@ -79,7 +80,7 @@ def player_openings_black(cursor, player_name):
         SELECT Eco, COUNT(*) AS games_played
         FROM Game
         JOIN Player ON Player.Id = Game.Black_player_id
-        WHERE Player.Name = %s
+        WHERE LOWER(TRIM(Player.Name)) = LOWER(TRIM(%s))
           AND Eco IS NOT NULL
         GROUP BY Eco
         ORDER BY games_played DESC;
@@ -101,7 +102,7 @@ def win_rate_by_opening(cursor, player_name):
         INNER JOIN Game 
             ON Player.Id = Game.White_player_id
 	        OR Player.Id = Game.Black_player_id
-        WHERE Player.Name = %s
+        WHERE LOWER(TRIM(Player.Name)) = LOWER(TRIM(%s))
         GROUP BY Game.Eco
         ORDER BY Win_Percent DESC;
     """, (player_name,))
@@ -165,12 +166,12 @@ def player_winrate_by_colour(cursor, player_name):
                 WHEN (Player.Id = Game.Black_player_id AND Game.Result = '0-1')
                 THEN 1 ELSE 0
             END
-        ) * 1.0 / SUM(CASE WHEN Player.Id = Game.Black_player_id THEN 1 ELSE 0 END) AS Black_Win_Percent
+        ) * 100.0 / SUM(CASE WHEN Player.Id = Game.Black_player_id THEN 1 ELSE 0 END) AS Black_Win_Percent
     FROM Player
     INNER JOIN Game 
         ON Player.Id = Game.White_player_id
         OR Player.Id = Game.Black_player_id
-    WHERE Player.Name = %s
+    WHERE LOWER(TRIM(Player.Name)) = LOWER(TRIM(%s))
     GROUP BY Player.Id, Player.Name; 
     """,(player_name,))
     return cursor.fetchall()
@@ -195,18 +196,18 @@ def player_win_loss_draw_and_decisive_game_percent(cursor, player_name):
                 END
             ) as losses,
             SUM(CASE WHEN Game.Result = '1/2-1/2' THEN 1 ELSE 0 END) as draws,
-            SUM(
+            ROUND(SUM(
                 CASE
                     WHEN (Game.Result = '1-0')
                       OR (Game.Result = '0-1')
                     THEN 1 ELSE 0
                 END
-            ) *100.0 / COUNT(*) as decisive_percentage
+            ) *100.0 / COUNT(*), 2) as decisive_percentage
         FROM Player
         INNER JOIN Game 
             ON Player.Id = Game.White_player_id
             OR Player.Id = Game.Black_player_id
-        WHERE Player.Name = %s
+        WHERE LOWER(TRIM(Player.Name)) = LOWER(TRIM(%s))
         GROUP BY Player.Id, Player.Name; 
     """,(player_name,))
     return cursor.fetchall()

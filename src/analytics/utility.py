@@ -39,3 +39,6 @@ def Eco_to_opening(Eco_code):
                 return opening_name
 
     return "Unknown Opening"
+
+def plot_opening_percentanges(dataframe):
+    pass
