@@ -4,7 +4,7 @@ import streamlit as st
 import pandas as pd
 from src.db.connection_manager import Connection_Manager
 from data.bulk_insert import bulk_insert
-from src.analytics.utility import Eco_to_opening
+from src.analytics.utility import Eco_to_opening, plot_win_percentanges
 from src.analytics.queries import (
     total_games, total_tournaments, average_player_rating,
     decisive_games, white_wins, black_wins, reset_tables,
@@ -258,6 +258,13 @@ def section_divider(label):
     """, unsafe_allow_html=True)
 
 
+def safe_apply_eco(df):
+    """Safely add opening_name column — no-ops if df is empty or missing Eco column."""
+    if not df.empty and "Eco" in df.columns:
+        df["opening_name"] = df["Eco"].apply(Eco_to_opening)
+    return df
+
+
 def main():
     # ---------------------------
     # SESSION STATE
@@ -307,7 +314,7 @@ def main():
     # ---------------------------
     with st.expander("♜  General Analytics", expanded=True):
         if st.button("Generate General Analytics", key="gen_analytics"):
-            total     = conn_manager.handle_SQL(total_games)
+            total       = conn_manager.handle_SQL(total_games)
             tournaments = conn_manager.handle_SQL(total_tournaments)
             avg_rating  = conn_manager.handle_SQL(average_player_rating)
             decisive    = conn_manager.handle_SQL(decisive_games)
@@ -371,20 +378,23 @@ def main():
                 black_openings = pd.DataFrame(conn_manager.handle_SQL(player_openings_black, player_name=player_name))
                 win_by_opening = pd.DataFrame(conn_manager.handle_SQL(win_rate_by_opening,   player_name=player_name))
 
+                # ── Failsafe: check player exists before any column access ──
                 if openings.empty:
                     st.warning("Player not found. Please try another name.")
                     st.stop()
 
-                openings["opening_name"]       = openings["Eco"].apply(Eco_to_opening)
-                white_openings["opening_name"] = white_openings["Eco"].apply(Eco_to_opening)
-                black_openings["opening_name"] = black_openings["Eco"].apply(Eco_to_opening)
-                win_by_opening["opening_name"] = win_by_opening["Eco"].apply(Eco_to_opening)
+                openings       = safe_apply_eco(openings)
+                white_openings = safe_apply_eco(white_openings)
+                black_openings = safe_apply_eco(black_openings)
+                win_by_opening = safe_apply_eco(win_by_opening)
 
                 winrate_colour = pd.DataFrame(conn_manager.handle_SQL(player_winrate_by_colour, player_name=player_name))
                 win_loss_draw  = pd.DataFrame(conn_manager.handle_SQL(player_win_loss_draw_and_decisive_game_percent, player_name=player_name))
 
-                # Win / Loss / Draw summary cards
                 if not win_loss_draw.empty:
+                    #plot_win_percentanges(win_loss_draw)
+
+                    # Win / Loss / Draw summary cards
                     row = win_loss_draw.iloc[0]
                     inner = ""
                     for col in win_loss_draw.columns:
@@ -401,23 +411,44 @@ def main():
                 col1, col2 = st.columns(2)
                 with col1:
                     section_divider("Openings · All")
-                    st.dataframe(openings, use_container_width=True)
+                    if not openings.empty:
+                        st.dataframe(openings, use_container_width=True)
+                    else:
+                        st.info("No opening data available.")
+
                     section_divider("Win Rate by Opening")
-                    st.dataframe(win_by_opening, use_container_width=True)
+                    if not win_by_opening.empty:
+                        st.dataframe(win_by_opening, use_container_width=True)
+                    else:
+                        st.info("No win rate data available.")
+
                 with col2:
                     section_divider("Openings · White")
-                    st.dataframe(white_openings, use_container_width=True)
+                    if not white_openings.empty:
+                        st.dataframe(white_openings, use_container_width=True)
+                    else:
+                        st.info("No white opening data available.")
+
                     section_divider("Openings · Black")
-                    st.dataframe(black_openings, use_container_width=True)
+                    if not black_openings.empty:
+                        st.dataframe(black_openings, use_container_width=True)
+                    else:
+                        st.info("No black opening data available.")
 
                 section_divider("Win Rate by Colour")
-                st.dataframe(winrate_colour, use_container_width=True)
+                if not winrate_colour.empty:
+                    st.dataframe(winrate_colour, use_container_width=True)
+                else:
+                    st.info("No colour win rate data available.")
 
                 section_divider("All Games")
                 players_games = pd.DataFrame(
                     conn_manager.handle_SQL(select_player_all_games, player_name=player_name)
                 )
-                st.dataframe(players_games, use_container_width=True)
+                if not players_games.empty:
+                    st.dataframe(players_games, use_container_width=True)
+                else:
+                    st.info("No games found for this player.")
 
 
 if __name__ == "__main__":

@@ -19,7 +19,7 @@ def bulk_insert(cursor, pgn_file):
 
     #Goes through every game object stored in the list of games
     for game in games:
-        print(game.white, game.black)
+        print(game.white," | ",  game.black," | ", game.white_elo," | ", game.black_elo)
         players = [game.white, game.black]
         if None in players or "?" in players:
             print(f"Skipping game due to missing player: White={game.white}, Black={game.black}")

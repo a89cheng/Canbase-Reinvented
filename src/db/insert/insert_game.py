@@ -56,16 +56,30 @@ def insert_game(cursor, game_obj, white_id, black_id, tourney_id):
     eco = game_obj.eco
     moves = game_obj.moves
     date = game_obj.date
+    white_elo = game_obj.white_elo
+    black_elo = game_obj.black_elo
 
     #If any of the code core Ids return as None, then an error is raised
     if None in [white_id, black_id, tourney_id]:
         raise ValueError("Cannot insert game: one or more IDs are missing")
 
+
     #Placedin try block in case the insert fails...
     try:
-        cursor.execute("INSERT INTO Game (White_player_id , Black_player_id , Tournament_id , Result, Eco, Moves, Played_Date) "
-                       "VALUES (%s,%s,%s,%s,%s,%s,%s);", (white_id , black_id , tourney_id , result, eco, moves, date)
+        cursor.execute("INSERT INTO Game (White_player_id , Black_player_id , Tournament_id, White_player_rating, Black_player_rating , Result, Eco, Moves, Played_Date) "
+                       "VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s);", (white_id , black_id , tourney_id , white_elo, black_elo, result, eco, moves, date)
         )
+
+        # Update Player table with most recent ELO
+        if white_elo:
+            cursor.execute("UPDATE Player "
+                           "SET Rating = %s "
+                           "WHERE Id = %s;", (white_elo, white_id))
+        if black_elo:
+            cursor.execute("UPDATE Player "
+                           "SET Rating = %s "
+                           "WHERE Id = %s;", (black_elo, black_id))
+
     #Whatever exception as e... standard python syntax
     except Exception as e:
         #Error message is a textbook python variable?

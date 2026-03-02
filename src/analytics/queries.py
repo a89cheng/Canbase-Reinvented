@@ -265,7 +265,7 @@ def games_per_tournament(cursor):
 
 def select_all_games(cursor):
     cursor.execute("""
-        SELECT White.Name AS 'White' , White.Rating As 'White Elo', Black.Name AS 'Black', Black.Rating AS 'Black Elo' , Game.Result, Game.Moves
+        SELECT White.Name AS 'White' , Game.White_player_rating As 'White Elo', Black.Name AS 'Black', Game.Black_player_rating AS 'Black Elo' , Game.Result, Game.Moves
         FROM Game
         INNER JOIN Player AS White ON Game.White_player_id = White.Id
         INNER JOIN Player AS Black ON Game.Black_player_id = Black.Id;
@@ -274,7 +274,7 @@ def select_all_games(cursor):
 
 def select_player_all_games(cursor, player_name):
     cursor.execute("""
-            SELECT White.Name AS 'White' , White.Rating As 'White Elo', Black.Name AS 'Black', Black.Rating AS 'Black Elo' , Game.Result, Game.Moves
+            SELECT Game.Played_Date, White.Name AS 'White' , Game.White_player_rating As 'White Elo', Black.Name AS 'Black', Game.White_player_rating AS 'Black Elo' , Game.Result, Game.Moves
             FROM Game
             INNER JOIN Player AS White ON Game.White_player_id = White.Id
             INNER JOIN Player AS Black ON Game.Black_player_id = Black.Id
@@ -319,6 +319,8 @@ def reset_tables(cursor):
         White_player_id INTEGER NOT NULL,
         Black_player_id INTEGER NOT NULL,
         Tournament_id INTEGER NOT NULL,
+        White_player_rating INTEGER,
+        Black_player_rating INTEGER,
         Moves VARCHAR(5000),
         Result VARCHAR(7),
         Played_Date VARCHAR(25),
