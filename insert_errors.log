@@ -22364,3 +22364,4 @@
 2026-03-01 15:28:08 | Failed to insert game |White=Barkman, Daniel | Black=Khedkar, Jay S | Event=Winnipeg op |Error=str: 1048 (23000): Column 'Tournament_id' cannot be null
 2026-03-01 15:28:08 | Failed to insert game |White=Gibson, Kris | Black=Mundwiler, Les | Event=Winnipeg op |Error=str: 1048 (23000): Column 'Tournament_id' cannot be null
 2026-03-01 15:28:08 | Failed to insert game |White=Beaudoin, Stephane | Black=Poliquin, Yvon | Event=Zukertort |Error=str: 1048 (23000): Column 'Tournament_id' cannot be null
+2026-03-19 16:56:31 | Failed to insert game |White=Jodar, Marlon | Black=Zhou, Joe | Event=Abe Yanofsky mem. |Error=str: 1213 (40001): Deadlock found when trying to get lock; try restarting transaction

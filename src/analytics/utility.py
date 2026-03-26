@@ -1,6 +1,12 @@
 import matplotlib.pyplot as plt
 from matplotlib import style
 
+def safe_apply_eco(df):
+    """Safely add opening_name column — no-ops if df is empty or missing Eco column."""
+    if not df.empty and "Eco" in df.columns:
+        df["opening_name"] = df["Eco"].apply(Eco_to_opening)
+    return df
+
 def Eco_to_opening(Eco_code):
     """ECO (encyclopedia of chess openings) conversion to Opening name"""
 

@@ -17,7 +17,7 @@ def total_tournaments(cursor):
     return cursor.fetchone()["tournaments"]
 
 def average_player_rating(cursor):
-    cursor.execute("SELECT AVG(Rating) AS avg_rtng FROM Player;")
+    cursor.execute("SELECT ROUND(AVG(Rating),0) AS avg_rtng FROM Player;")
     return cursor.fetchone()["avg_rtng"]
 
 def decisive_games(cursor):

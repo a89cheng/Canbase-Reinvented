@@ -4,7 +4,7 @@ import streamlit as st
 import pandas as pd
 from src.db.connection_manager import Connection_Manager
 from data.bulk_insert import bulk_insert
-from src.analytics.utility import Eco_to_opening, plot_win_percentanges
+from src.analytics.utility import safe_apply_eco, plot_win_percentanges
 from src.analytics.queries import (
     total_games, total_tournaments, average_player_rating,
     decisive_games, white_wins, black_wins, reset_tables,
@@ -14,6 +14,7 @@ from src.analytics.queries import (
     player_openings_all, player_openings_white, player_openings_black,
     win_rate_by_opening, player_winrate_by_colour, player_win_loss_draw_and_decisive_game_percent
 )
+from src.analytics.JSON_transformer import (transform_dataframe)
 
 # ---------------------------
 # PAGE CONFIG & GLOBAL STYLES
@@ -258,13 +259,6 @@ def section_divider(label):
     """, unsafe_allow_html=True)
 
 
-def safe_apply_eco(df):
-    """Safely add opening_name column — no-ops if df is empty or missing Eco column."""
-    if not df.empty and "Eco" in df.columns:
-        df["opening_name"] = df["Eco"].apply(Eco_to_opening)
-    return df
-
-
 def main():
     # ---------------------------
     # SESSION STATE
@@ -283,7 +277,7 @@ def main():
 
         uploaded_file = st.file_uploader("Upload a PGN file", type="pgn")
         file_path_input = st.text_input("Or paste a file path:")
-        player_name = st.text_input("Player name for analytics:")
+        player_name = st.text_input("Seach Player (last, first):")
 
         can_insert = uploaded_file or file_path_input
         if can_insert and not st.session_state.data_inserted:
@@ -375,8 +369,11 @@ def main():
 
                 openings       = pd.DataFrame(conn_manager.handle_SQL(player_openings_all,   player_name=player_name))
                 white_openings = pd.DataFrame(conn_manager.handle_SQL(player_openings_white, player_name=player_name))
+                print(white_openings)
                 black_openings = pd.DataFrame(conn_manager.handle_SQL(player_openings_black, player_name=player_name))
+                print(black_openings)
                 win_by_opening = pd.DataFrame(conn_manager.handle_SQL(win_rate_by_opening,   player_name=player_name))
+                print(win_by_opening)
 
                 # ── Failsafe: check player exists before any column access ──
                 if openings.empty:
@@ -389,7 +386,9 @@ def main():
                 win_by_opening = safe_apply_eco(win_by_opening)
 
                 winrate_colour = pd.DataFrame(conn_manager.handle_SQL(player_winrate_by_colour, player_name=player_name))
+                print(winrate_colour)
                 win_loss_draw  = pd.DataFrame(conn_manager.handle_SQL(player_win_loss_draw_and_decisive_game_percent, player_name=player_name))
+                print(win_loss_draw)
 
                 if not win_loss_draw.empty:
                     #plot_win_percentanges(win_loss_draw)
