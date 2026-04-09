@@ -15,6 +15,8 @@ from src.analytics.queries import (
     win_rate_by_opening, player_winrate_by_colour, player_win_loss_draw_and_decisive_game_percent
 )
 from src.analytics.JSON_transformer import (transform_dataframe)
+from src.services.player_analysis_service import player_df_creation
+from src.analytics.LLM_connection import generate_report
 
 # ---------------------------
 # PAGE CONFIG & GLOBAL STYLES
@@ -265,6 +267,8 @@ def main():
     # ---------------------------
     if "data_inserted" not in st.session_state:
         st.session_state.data_inserted = False
+    if "report_generated" not in st.session_state:
+        st.session_state.report_generated = False
 
     conn_manager = Connection_Manager()
 
@@ -368,12 +372,13 @@ def main():
                 """, unsafe_allow_html=True)
 
                 openings       = pd.DataFrame(conn_manager.handle_SQL(player_openings_all,   player_name=player_name))
-                white_openings = pd.DataFrame(conn_manager.handle_SQL(player_openings_white, player_name=player_name))
-                print(white_openings)
-                black_openings = pd.DataFrame(conn_manager.handle_SQL(player_openings_black, player_name=player_name))
-                print(black_openings)
-                win_by_opening = pd.DataFrame(conn_manager.handle_SQL(win_rate_by_opening,   player_name=player_name))
-                print(win_by_opening)
+
+                #Makes all the dfs that are required for the AI
+                white_openings , black_openings, win_by_opening , winrate_colour, win_loss_draw = player_df_creation(conn_manager, player_name)
+
+                json_dict = transform_dataframe(white_openings , black_openings, win_by_opening , winrate_colour, win_loss_draw)
+                AI_report = generate_report(json_dict)
+                st.session_state.report_generated = AI_report
 
                 # ── Failsafe: check player exists before any column access ──
                 if openings.empty:
@@ -384,11 +389,6 @@ def main():
                 white_openings = safe_apply_eco(white_openings)
                 black_openings = safe_apply_eco(black_openings)
                 win_by_opening = safe_apply_eco(win_by_opening)
-
-                winrate_colour = pd.DataFrame(conn_manager.handle_SQL(player_winrate_by_colour, player_name=player_name))
-                print(winrate_colour)
-                win_loss_draw  = pd.DataFrame(conn_manager.handle_SQL(player_win_loss_draw_and_decisive_game_percent, player_name=player_name))
-                print(win_loss_draw)
 
                 if not win_loss_draw.empty:
                     #plot_win_percentanges(win_loss_draw)
@@ -449,6 +449,16 @@ def main():
                 else:
                     st.info("No games found for this player.")
 
+    # ---------------------------
+    # PLAYER AI REPORT
+    # ---------------------------
+    with st.expander("♛  Player Report", expanded=True):
+        if st.session_state.report_generated is False:
+            st.warning("Enter a player name in the sidebar first.")
+        elif st.session_state.report_generated is None:
+            st.warning("Gemini API has exceeded daily usage")
+        else:
+            st.markdown(st.session_state.report_generated)
 
 if __name__ == "__main__":
     main()
